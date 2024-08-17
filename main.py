@@ -1,5 +1,7 @@
 import pygame
 from player import Player
+from objects.block import Block
+import fileLoader
 
 pygame.display.init()
 
@@ -9,7 +11,8 @@ pygame.display.set_caption("Fat Cat")
 
 clock = pygame.time.Clock()
 
-cat = Player((400, 400))
+cat : Player = Player((400, 400))
+blocks : list[Block] = [Block((0, 1000), (1920, 80), fileLoader.loadImage("Block.png")), Block((0, 0), (80, 1080), fileLoader.loadImage("Block.png")), Block((800, 0), (80, 1080), fileLoader.loadImage("Block.png"))]
 
 running = True
 
@@ -31,12 +34,15 @@ while running:
 
     keyDown = pygame.key.get_pressed()
 
-    cat.update(keyDown)
+    cat.update(keyDown, blocks)
 
     # ------- DRAWING ------- #
     mainSurface.fill((255, 255, 255))
 
     cat.draw(mainSurface)
+
+    for block in blocks:
+        block.draw(mainSurface)
 
     pygame.display.flip()
     clock.tick(60)
