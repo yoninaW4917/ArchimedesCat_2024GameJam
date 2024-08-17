@@ -19,7 +19,7 @@ def loadImage(localImagePath : str) -> pygame.Surface:
         pygame.Surface: The loaded image unless the image was not on the path in which case returns a null image
     """
     try:
-        return pygame.image.load(localImagePath)
+        return pygame.image.load(f"assests/images/{localImagePath}")
     except FileNotFoundError:
         surface = pygame.Surface((2, 2))
         
@@ -42,7 +42,7 @@ def loadFont(localFontPath : str, sizeIn : int) -> pygame.font.Font:
         pygame.font.Font: Returns the loaded font unless the font doesn't exist in which case returns a default font
     """
     try:
-        return pygame.font.Font(localFontPath, sizeIn)
+        return pygame.font.Font(f"assests/fonts/{localFontPath}", sizeIn)
     except FileNotFoundError:
         return pygame.font.Font(pygame.font.get_default_font(), sizeIn)
     
@@ -56,7 +56,7 @@ def loadSound(localSoundPath : str) -> pygame.mixer.Sound:
         pygame.mixer.Sound: Returns the loaded sound unless the sound doesn't exist in which case returns an empty sound object
     """
     try:
-        return pygame.mixer.Sound(localSoundPath)
+        return pygame.mixer.Sound(f"assests/sounds/{localSoundPath}")
     except FileNotFoundError:
         # Empty sound file
         return pygame.mixer.Sound(np.zeros((1, 1), dtype=np.int16))
