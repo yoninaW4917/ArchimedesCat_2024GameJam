@@ -1,6 +1,8 @@
 import pygame
 from player import Player
 from objects.block import Block
+from objects.fish import Fish
+from objects.scale import Scale
 from levelEditor.levelEditor import LevelGenerator
 import fileLoader
 
