@@ -2,6 +2,7 @@ import fileLoader
 import pygame
 from objects.block import Block
 import utils
+from objects.scale import Scale
 
 CAT_IMAGES = [
     (fileLoader.loadImage("skinnyCat.png"), (11, 70)),
@@ -37,7 +38,8 @@ class Player:
 
         # Determines whether time should be slowed
         self.slowTime = 0
-
+        # Determines how many scales the player has touched
+        self.scale_count = 0
         # Wall jump variables
         self.wallJumpCooldown = 0
         self.wallJumpCooldownTime = 10
@@ -55,7 +57,7 @@ class Player:
     wallJumpCooldown = 0  # Cooldown counter
     wallJumpCooldownTime = 10  # Number of frames to wait before allowing direction changes after a wall jump
 
-    def update(self, keysDownIn: dict[str, bool], blocks: list[Block]) -> None:
+    def update(self, keysDownIn: dict[str, bool], blocks: list[Block], scales: list[Scale]) -> None:
         # Scale logic
         if (keysDownIn[self.keyBinds["scaleUp"]] or keysDownIn[self.keyBinds["scaleDown"]]) and self.showSlider == 0:
             self.showSlider = 1
@@ -154,6 +156,19 @@ class Player:
                     self.pos[1] = blockData['y'] + blockData['h']
 
                 self.velo[1] = 0  # Stop vertical movement
+        for scale in scales:
+            scaleData = scale.get()
+            width = self.size[0] * self.catSize / 100
+            height = self.size[1] * self.catSize / 100
+
+            # Check for collision on the X and Y axes
+            if (self.pos[0] + width > scaleData['x'] and
+                self.pos[0] < scaleData['x'] + scaleData['w'] and
+                self.pos[1] + height > scaleData['y'] and
+                self.pos[1] < scaleData['y'] + scaleData['h']):
+
+                # Collision detected, resolve it
+               self.scale_count += 1
 
         if onGround:
             if keysDownIn[self.keyBinds["jump"]]:
