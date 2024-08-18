@@ -81,12 +81,30 @@ class Player():
 
                 # Apply the size change without affecting velocity
                 newCatSize = 100 + self.scaleTimer / 60 * 100
+
+                # Get current dimensions of the player
+                width = self.size[0] * newCatSize / 100
+                height = self.size[1] * newCatSize / 100
+
+                for block in blocks:
+                    blockData = block.get()
+                    if (self.pos[0] + width > blockData['x'] and
+                            self.pos[0] < blockData['x'] + blockData['w'] and
+                            self.pos[1] + height > blockData['y'] and
+                            self.pos[1] < blockData['y'] + blockData['h']):
+                        print("DEATH - cat squashed")
+
+                self.pos[0] += (self.catSize - newCatSize) / 4
+                self.pos[1] += (self.catSize - newCatSize) / 4
+
                 self.catSize = newCatSize
                 self.showSlider = 0
                 self.scaleDirection = 1  # Reset direction for next time
                 print(self.catSize)
 
                 self.slowTime = False
+
+
 
         # Update velocities based on key presses
         if self.wallJumpCooldown > 0:
@@ -134,9 +152,14 @@ class Player():
                         self.pos[0] = blockData['x'] + blockData['w']  # Adjust position
                         onWall = -1  # Indicate collision with wall on the left
 
+                if blockData["water"] == True:
+                    if onWall != 0:
+                        print("DEATH - water")
+
         # Y-axis collision detection and handling
         self.pos[1] += svelo[1]
         onGround = False  # Track if player is on the ground
+        onRoof = False # Track if player is on the roof
 
         for block in blocks:
             blockData = block.get()
@@ -151,8 +174,14 @@ class Player():
                     onGround = True  # Player is on the ground
                 elif self.velo[1] < 0:  # Moving up
                     self.pos[1] = blockData['y'] + blockData['h']
+                    onRoof = True # Player is on the roof
+
+                if blockData["water"] == True:
+                    if onRoof or onGround:
+                        print("DEATH - water")
 
                 self.velo[1] = 0  # Stop vertical movement
+
 
         if onGround:
             if keysDownIn[self.keyBinds["jump"]]:
@@ -221,5 +250,5 @@ class Player():
             surfaceIn.blit(SLIDER_IMAGE, sliderPos)
 
             # Draw the cat paw based on the current scale
-            pawPos = (sliderPos[0] + 10, sliderPos[1] + 60 - int(self.scaleTimer))
+            pawPos = (sliderPos[0] + 25, sliderPos[1] + 60 - int(self.scaleTimer))
             surfaceIn.blit(CAT_PAW_IMAGE, pawPos)
