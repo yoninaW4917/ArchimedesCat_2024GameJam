@@ -111,11 +111,7 @@ class Player:
         if self.wallJumpCooldown > 0:
             self.wallJumpCooldown -= 1  # Decrement cooldown counter
         else:
-            if keysDownIn[self.keyBinds["right"]] or keysDownIn[self.keyBinds["left"]]:
-                self.velo[0] += (keysDownIn[self.keyBinds["right"]] - keysDownIn[self.keyBinds["left"]])
-                self.velo[0] = utils.clamp(self.velo[0], -5, 5)
-            else:
-                self.velo[0] *= 0.86
+            self.velo[0] = (keysDownIn[self.keyBinds["right"]] - keysDownIn[self.keyBinds["left"]]) * 5
 
         # Apply gravity
         gravity_effect = 0.4 * 75 / self.catSize
@@ -196,7 +192,7 @@ class Player:
         if onWall != 0:
             if keysDownIn[self.keyBinds["jump"]]:
                 # Apply a jump force upwards
-                self.velo[1] = -5 * self.catSize / 100  # Adjust this value to control jump strength
+                self.velo[1] -= 5 * self.catSize / 100  # Adjust this value to control jump strength
 
                 # Apply a force to move away from the wall
                 self.velo[0] = -15 * min(1, 100 / self.catSize) if onWall == 1 else 15 * min(1, 100 / self.catSize)  # Adjust this value to control horizontal movement away from the wall
@@ -255,5 +251,5 @@ class Player:
             surfaceIn.blit(SLIDER_IMAGE, sliderPos)
 
             # Draw the cat paw based on the current scale
-            pawPos = (sliderPos[0] + 10, sliderPos[1] + 60 - int(self.scaleTimer))
+            pawPos = (sliderPos[0] + 25, sliderPos[1] + 60 - int(self.scaleTimer))
             surfaceIn.blit(CAT_PAW_IMAGE, pawPos)
