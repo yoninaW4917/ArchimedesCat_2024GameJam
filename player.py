@@ -9,7 +9,7 @@ CAT_IMAGES = [
     (fileLoader.loadImage("fatCat.png"), (131, 190))
 ]
 SLIDER_IMAGE = pygame.transform.scale(fileLoader.loadImage("slider.png"), (40, 120))
-CAT_PAW_IMAGE = pygame.transform.scale(fileLoader.loadImage("catPaw.png"), (15, 15))
+CAT_PAW_IMAGE = pygame.transform.scale(fileLoader.loadImage("catPaw.png"), (16, 16))
 
 
 class Player:
