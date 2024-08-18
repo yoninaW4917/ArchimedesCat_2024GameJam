@@ -1,25 +1,23 @@
 import pygame as py
+import json
 from objects.block import Block
+import fileLoader
 
-#setup
-py.init()
-windowwidth = 1920
-windowheight = 1080
-window = py.display.set_mode((windowwidth,windowheight))
-py.display.set_caption("Catass Level Editor")
-clock = py.time.Clock()
-
-#draw loop
-while True:
-    #check for events
-    ev = py.event.poll()
-    if ev.type == py.QUIT:
-        break
-    
-    window.fill("white")
-
-    #draw here
-    
-    py.display.flip()
-    clock.tick(60)
-py.quit()
+class LevelGenerator:
+    def __init__(self):
+        self.level = 1
+        self.data = self.load_data("data.txt")
+        self.update(self.level)
+    def load_data(self,file:str)->dict:
+        with open(file, 'r') as f:
+            data = json.load(f)
+        return self.convert(data)
+    def convert(self, data: dict) -> dict:
+        for level, content in data.items():
+            for item in content["blocks"]:
+                item[0] = tuple(item[0])
+                item[1] = tuple(item[1])
+                item[2] = fileLoader.loadImage(item[2])
+        return data
+    def update(self, level:int):
+        self.blocks: list[Block] = [Block(block[0], block[1], block[2]) for block in self.data[level]["blocks"]]
