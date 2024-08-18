@@ -3,11 +3,8 @@ from player import Player
 from objects.block import Block
 from levelEditor.levelEditor import LevelGenerator
 import fileLoader
-from objects.scale import Scale
-from objects.fish import Fish
 
 pygame.display.init()
-pygame.font.init()
 
 mainSurface = pygame.display.set_mode((1920, 1080))
 
@@ -39,17 +36,13 @@ while running:
 
     keyDown = pygame.key.get_pressed()
 
-    cat.update(keyDown, blocks, scales, fishes)
+    cat.update(keyDown, blocks)
 
     # ------- DRAWING ------- #
     mainSurface.fill((255, 255, 255))
 
     for block in blocks:
         block.draw(mainSurface)
-    for scale in scales:
-        scale.draw(mainSurface)
-    for fish in fishes:
-        fish.draw(mainSurface)
 
     cat.draw(mainSurface)
 

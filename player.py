@@ -2,8 +2,6 @@ import fileLoader
 import pygame
 from objects.block import Block
 import utils
-from objects.scale import Scale
-from objects.fish import Fish
 
 CAT_IMAGES = [
     (fileLoader.loadImage("skinnyCat.png"), (11, 70)),
@@ -39,13 +37,6 @@ class Player():
         # Determines whether time should be slowed
         self.slowTime = 0
 
-        # Scale And Fish Variables
-        self.scale_count = 0
-        self.fish_count = 0
-        # Initialize a font object
-        self.font = fileLoader.loadFont(None, 36)
-
-
         # Wall jump variables
         self.wallJumpCooldown = 0
         self.wallJumpCooldownTime = 10
@@ -63,7 +54,7 @@ class Player():
     wallJumpCooldown = 0  # Cooldown counter
     wallJumpCooldownTime = 10  # Number of frames to wait before allowing direction changes after a wall jump
 
-    def update(self, keysDownIn: dict[str, bool], blocks: list[Block], scales: list[Scale], fishes: list[Fish]) -> None:
+    def update(self, keysDownIn: dict[str, bool], blocks: list[Block]) -> None:
         # Scale logic
         if (keysDownIn[self.keyBinds["scaleUp"]] or keysDownIn[self.keyBinds["scaleDown"]]) and self.showSlider == 0:
             self.showSlider = 1
@@ -190,38 +181,6 @@ class Player():
                         print("DEATH - water")
 
                 self.velo[1] = 0  # Stop vertical movement
-        for scale in scales:
-            scaleData = scale.get()
-            width = self.size[0] * self.catSize / 100
-            height = self.size[1] * self.catSize / 100
-
-            # Check for collision on the X and Y axes
-            if (self.pos[0] + width > scaleData['x'] and
-                self.pos[0] < scaleData['x'] + scaleData['w'] and
-                self.pos[1] + height > scaleData['y'] and
-                self.pos[1] < scaleData['y'] + scaleData['h']):
-
-                # Collision detected, collect the scale
-                self.scale_count += 1
-                scale.collected = True
-        scales[:] = [scale for scale in scales if not scale.collected]
-
-
-        for fish in fishes:
-            fishData = fish.get()
-            width = self.size[0] * self.catSize / 100
-            height = self.size[1] * self.catSize / 100
-
-            # Check for collision on the X and Y axes
-            if (self.pos[0] + width > fishData['x'] and
-                self.pos[0] < fishData['x'] + fishData['w'] and
-                self.pos[1] + height > fishData['y'] and
-                self.pos[1] < fishData['y'] + fishData['h']):
-
-                # Collision detected, collect the fish
-                self.fish_count += 1
-                fish.collectedFish = True
-                print ("Fish collected", self.fish_count)
 
 
         if onGround:
@@ -293,8 +252,3 @@ class Player():
             # Draw the cat paw based on the current scale
             pawPos = (sliderPos[0] + 25, sliderPos[1] + 60 - int(self.scaleTimer))
             surfaceIn.blit(CAT_PAW_IMAGE, pawPos)
-            
-        scale_count_text = self.font.render(f'Scales: {self.scale_count}', True, (0, 0, 0))
-        surfaceIn.blit(scale_count_text, (100, 100))  # Position the text at the top-left corner of the screen
-        fish_count_text = self.font.render(f'Fish: {self.fish_count}', True, (0, 0, 0))
-        surfaceIn.blit(fish_count_text, (500, 100))  # Position the text at the top-left corner of the screen
