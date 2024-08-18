@@ -3,6 +3,7 @@ import pygame
 from objects.block import Block
 import utils
 from objects.scale import Scale
+from objects.fish import Fish
 
 CAT_IMAGES = [
     (fileLoader.loadImage("skinnyCat.png"), (11, 70)),
@@ -38,8 +39,12 @@ class Player:
 
         # Determines whether time should be slowed
         self.slowTime = 0
-        # Determines how many scales the player has touched
+
+        # Scale And Fish Variables
         self.scale_count = 0
+        self.fish_count = 0
+
+
         # Wall jump variables
         self.wallJumpCooldown = 0
         self.wallJumpCooldownTime = 10
@@ -57,7 +62,7 @@ class Player:
     wallJumpCooldown = 0  # Cooldown counter
     wallJumpCooldownTime = 10  # Number of frames to wait before allowing direction changes after a wall jump
 
-    def update(self, keysDownIn: dict[str, bool], blocks: list[Block], scales: list[Scale]) -> None:
+    def update(self, keysDownIn: dict[str, bool], blocks: list[Block], scales: list[Scale], fishes: list[Fish]) -> None:
         # Scale logic
         if (keysDownIn[self.keyBinds["scaleUp"]] or keysDownIn[self.keyBinds["scaleDown"]]) and self.showSlider == 0:
             self.showSlider = 1
@@ -167,8 +172,27 @@ class Player:
                 self.pos[1] + height > scaleData['y'] and
                 self.pos[1] < scaleData['y'] + scaleData['h']):
 
-                # Collision detected, resolve it
-               self.scale_count += 1
+                # Collision detected, collect the scale
+                self.scale_count += 1
+                scale.collected = True
+        scales[:] = [scale for scale in scales if not scale.collected]
+
+
+        for fish in fishes:
+            fishData = fish.get()
+            width = self.size[0] * self.catSize / 100
+            height = self.size[1] * self.catSize / 100
+
+            # Check for collision on the X and Y axes
+            if (self.pos[0] + width > fishData['x'] and
+                self.pos[0] < fishData['x'] + fishData['w'] and
+                self.pos[1] + height > fishData['y'] and
+                self.pos[1] < fishData['y'] + fishData['h']):
+
+                # Collision detected, collect the fish
+                self.fish_count += 1
+                fish.collectedFish = True
+                print ("Fish collected", self.fish_count)
 
         if onGround:
             if keysDownIn[self.keyBinds["jump"]]:

@@ -4,9 +4,11 @@ class Scale:
     def __init__(self, x, y, width, height, imageIn):
         self.scale = py.Rect(x, y, width, height)
         self.image = py.transform.scale(imageIn, (width, height))  # Ensure the image is scaled to the correct size
+        self.collected = False
 
     def draw(self, surfaceIn):
-        surfaceIn.blit(self.image, (self.scale.x, self.scale.y))  # Corrected the blit method to use a tuple for position
+        if not self.collected:
+            surfaceIn.blit(self.image, (self.scale.x, self.scale.y))  # Corrected the blit method to use a tuple for position
 
 
     def get(self) -> dict[str, int]:
@@ -14,5 +16,8 @@ class Scale:
             "x": self.scale.x,
             "y": self.scale.y,
             "w": self.scale.width,
-            "h": self.scale.height
+            "h": self.scale.height,
+            "collected" : self.collected
         }
+    def collect(self):
+        self.collected = True
