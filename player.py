@@ -263,8 +263,9 @@ class Player:
             surfaceIn.blit(SLIDER_IMAGE, sliderPos)
 
             # Draw the cat paw based on the current scale
-            pawPos = (sliderPos[0] + 10, sliderPos[1] + 60 - int(self.scaleTimer))
+            pawPos = (sliderPos[0] + 25, sliderPos[1] + 60 - int(self.scaleTimer))
             surfaceIn.blit(CAT_PAW_IMAGE, pawPos)
+            
         scale_count_text = self.font.render(f'Scales: {self.scale_count}', True, (0, 0, 0))
         surfaceIn.blit(scale_count_text, (100, 100))  # Position the text at the top-left corner of the screen
         fish_count_text = self.font.render(f'Fish: {self.fish_count}', True, (0, 0, 0))
