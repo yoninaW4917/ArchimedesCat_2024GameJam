@@ -17,9 +17,11 @@ class LevelGenerator:
             for item in content["blocks"]:
                 item[2] = fileLoader.loadImage(item[2])
         return data
+    
     def generate_blocks(self, level:str) -> list[Block]:
         self.blocks: list[Block] = [Block(block[0], block[1], block[2]) for block in self.data[level]["blocks"]]
         return self.blocks
+    
     def get(self,level:str,key:str):
         try:
          return self.data[level][key]
