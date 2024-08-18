@@ -8,7 +8,7 @@ SLIDER_IMAGE = pygame.transform.scale(fileLoader.loadImage("slider.png"), (40, 1
 CAT_PAW_IMAGE = pygame.transform.scale(fileLoader.loadImage("catPaw.png"), (15, 15))
 
 class Player():
-    def __init__(self, startingPos : tuple[int, int] = (0, 0), sizeIn : tuple=(100, 100)) -> None:
+    def __init__(self, startingPos : list[int, int] = (0, 0), sizeIn : tuple=(100, 100)) -> None:
         # POS IS THE BOTTOM LEFT CORNER!
         self.pos = [startingPos[0], startingPos[1]]
         self.velo = [0, 0]

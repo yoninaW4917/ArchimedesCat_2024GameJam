@@ -1,6 +1,7 @@
 import pygame
 from player import Player
 from objects.block import Block
+from levelEditor.levelEditor import LevelGenerator
 import fileLoader
 
 pygame.display.init()
@@ -10,10 +11,11 @@ mainSurface = pygame.display.set_mode((1920, 1080))
 pygame.display.set_caption("Fat Cat")
 
 clock = pygame.time.Clock()
-
-cat : Player = Player((400, 400))
-blocks : list[Block] = [Block((0, 1000), (1920, 80), fileLoader.loadImage("Block.png")), Block((0, 0), (80, 1080), fileLoader.loadImage("Block.png")), Block((800, 0), (80, 1080), fileLoader.loadImage("Block.png"))]
-
+level_gen = LevelGenerator()
+level:int = 3
+cat : Player = Player(level_gen.get(str(level), "starting_pos"))
+#blocks : list[Block] = [Block((0, 1000), (1920, 80), fileLoader.loadImage("Block.png")), Block((0, 0), (80, 1080), fileLoader.loadImage("Block.png")), Block((800, 0), (80, 1080), fileLoader.loadImage("Block.png"))]
+blocks : list[Block] = level_gen.generate_blocks(str(level))
 running = True
 
 while running:

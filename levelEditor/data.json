@@ -1,5 +1,23 @@
 {
     "1": {
-    "blocks":[[[0, 1000], [1920, 80], "Block.png"],[[860, 0], [200, 1080], "Block.png"]]
+    "blocks":[[[0, 1000], [1920, 80], "Block.png"],[[860, 600], [400, 1080], "Block.png"]],
+    "water":[],
+    "scales":[],
+    "fish":[],
+    "starting_pos":[400,400]
+    },
+    "2": {
+        "blocks":[[[0, 1000], [1920, 80], "Block.png"],[[860, 0], [200,610], "Block.png"]],
+        "water":[],
+        "scales":[],
+        "fish":[],
+        "starting_pos":[400,400]
+    },
+    "3": {
+        "blocks":[[[0, 1000], [1920, 80], "Block.png"],[[860, 400], [400, 1080], "Block.png"],[[400, 500], [200, 80], "Block.png"]],
+        "water":[],
+        "scales":[],
+        "fish":[],
+        "starting_pos":[200,400]
     }
 }
