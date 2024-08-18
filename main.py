@@ -6,6 +6,7 @@ from objects.scale import Scale
 from objects.fish import Fish
 
 pygame.display.init()
+pygame.font.init()
 
 mainSurface = pygame.display.set_mode((1920, 1080))
 

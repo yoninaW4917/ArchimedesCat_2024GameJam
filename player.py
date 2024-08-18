@@ -43,6 +43,8 @@ class Player:
         # Scale And Fish Variables
         self.scale_count = 0
         self.fish_count = 0
+        # Initialize a font object
+        self.font = fileLoader.loadFont(None, 36)
 
 
         # Wall jump variables
