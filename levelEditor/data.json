@@ -2,9 +2,10 @@
     "1": {
         "blocks":[
                 [[0, 1000], [1920, 80], "Block.png", false],
-                [[0, 0], [1920, 80], "Block.png", false],
-                [[0, 0], [80, 1080], "Block.png", false],
-                [[1840, 0], [80, 1080], "Block.png", false],
+                [[0, 0], [1920, 80], "Block.png", false], 
+                [[0, 0], [80, 1080], "Block.png", false], 
+                [[1840, 0], [80, 1080], "Block.png", false], 
+
                 [[800, 600], [500, 450], "Block.png", false]
             ],
         "scales":[],
@@ -61,7 +62,8 @@
     },
     "5": {
         "blocks":[
-            [[0, 0], [1920, 80], "Block.png", true], 
+            [[0, 1000], [1920, 80], "Block.png", true],
+            [[0, 0], [1920, 80], "Block.png", false], 
             [[0, 0], [80, 1080], "Block.png", false], 
             [[1840, 0], [80, 1080], "Block.png", false],
             [[0, 1000], [1920, 80], "Block.png", true],
@@ -91,6 +93,36 @@
         "starting_pos":[200,400],
         "level_background":"Background6.png"
     },
+    "8": {
+        "blocks":[
+            [[0, 1000], [1920, 80], "Block.png", false],
+            [[0, 0], [1920, 80], "Block.png", false], 
+            [[0, 0], [80, 1080], "Block.png", false], 
+            [[1840, 0], [80, 1080], "Block.png", false],
+
+            [[1200, 950], [700, 50], "Block.png", true],
+            [[300, 850], [250, 50], "Block.png", false],
+            [[600, 800], [300, 400], "Block.png", false],
+            [[900, 600], [300, 800], "Block.png", false],
+
+            [[0, 300], [300, 40], "Block.png", false],
+            [[375, 300], [200, 40], "Block.png", false],
+
+            [[650, 300], [200, 40], "Block.png", false],
+            [[740, 300], [20, 350], "Block.png", false],
+
+            [[925, 300],[200, 40], "Block.png", false],
+            [[925, 300],[20, 225], "Block.png", false],
+                
+            [[1175, 400],[200, 20], "Block.png", false],
+            [[1375, 400],[20, 350], "Block.png", false],
+            [[1575, 300],[20, 550], "Block.png", false],
+            [[1350, 900],[100, 20], "Block.png", false]
+        ],
+        "scales":[],
+        "fish":[],
+        "starting_pos":[200,400]
+    },
     "9": {
         "blocks":[
             [[0, 1000], [1920, 80], "Block.png", true],
@@ -98,9 +130,6 @@
             [[0, 0], [80, 1080], "Block.png", false], 
             [[1840, 0], [80, 1080], "Block.png", false],
 
-            [[80, 650], [500, 50], "Block.png", false],
-            [[900, 650], [1100, 50], "Block.png", false],
-            [[900, 600], [250, 50], "Block.png", false],
             [[80, 300], [300, 350], "Block.png", false],
             [[80, 450], [550, 40], "Block.png", false],
             [[1500, 100], [80, 600], "Block.png", false],
