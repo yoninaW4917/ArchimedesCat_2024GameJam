@@ -19,7 +19,7 @@ class LevelGenerator:
         return data
     
     def generate_blocks(self, level:str) -> list[Block]:
-        self.blocks: list[Block] = [Block(block[0], block[1], block[2]) for block in self.data[level]["blocks"]]
+        self.blocks: list[Block] = [Block(*block) for block in self.data[level]["blocks"]]
         return self.blocks
     
     def get(self,level:str,key:str):
