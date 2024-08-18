@@ -66,6 +66,7 @@
             [[0, 0], [1920, 80], "Block.png", false], 
             [[0, 0], [80, 1080], "Block.png", false], 
             [[1840, 0], [80, 1080], "Block.png", false],
+            [[0, 1000], [1920, 80], "Block.png", true],
 
             [[80, 700], [350, 80], "Block.png", false],
             [[810, 700], [300, 80], "Block.png", false],
