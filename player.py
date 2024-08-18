@@ -42,6 +42,7 @@ class Player():
         self.wallJumpCooldownTime = 10
 
         self.fish_count = 0
+        self.scale_count = 0
 
         self.keyBinds: dict[str, int] = {
             "right": pygame.K_RIGHT,
@@ -198,6 +199,7 @@ class Player():
                 # Collision detected, collect the scale
                 self.scale_count += 1
                 scale.collected = True
+
         scales[:] = [scale for scale in scales if not scale.collected]
 
 

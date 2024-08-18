@@ -19,7 +19,7 @@ cat : Player = Player(level_gen.get(str(level), "starting_pos"),(100,100))
 #blocks : list[Block] = [Block((0, 1000), (1920, 80), fileLoader.loadImage("Block.png")), Block((0, 0), (80, 1080), fileLoader.loadImage("Block.png")), Block((800, 0), (80, 1080), fileLoader.loadImage("Block.png"))]
 blocks : list[Block] = level_gen.generate_blocks(str(level))
 
-#scales : list[Scale] = [Scale((100, 100), (50, 50), fileLoader.loadImage("Scale.png"))]
+scales : list[Scale] = [Scale((100, 125))]
 fishes : list[Fish] = [Fish((1450, 860))]
 
 running = True
@@ -42,7 +42,7 @@ while running:
 
     keyDown = pygame.key.get_pressed()
 
-    cat.update(keyDown, blocks, [], fishes)
+    cat.update(keyDown, blocks, scales, fishes)
 
     # ------- DRAWING ------- #
     mainSurface.fill((255, 255, 255))
@@ -58,6 +58,9 @@ while running:
 
     for fish in fishes:
         fish.draw(mainSurface)
+
+    for scale in scales:
+        scale.draw(mainSurface)
 
     pygame.display.flip()
     clock.tick(60)
