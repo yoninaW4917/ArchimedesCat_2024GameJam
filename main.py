@@ -41,10 +41,10 @@ while running:
     # ------- DRAWING ------- #
     mainSurface.fill((255, 255, 255))
 
-    cat.draw(mainSurface)
-
     for block in blocks:
         block.draw(mainSurface)
+
+    cat.draw(mainSurface)
 
     pygame.display.flip()
     clock.tick(60)
