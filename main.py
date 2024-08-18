@@ -1,6 +1,8 @@
 import pygame
 from player import Player
 from objects.block import Block
+from objects.scale import Scale
+from objects.fish import Fish
 from levelEditor.levelEditor import LevelGenerator
 import fileLoader
 
@@ -16,6 +18,8 @@ level:int = 4
 cat : Player = Player(level_gen.get(str(level), "starting_pos"),(100,100))
 #blocks : list[Block] = [Block((0, 1000), (1920, 80), fileLoader.loadImage("Block.png")), Block((0, 0), (80, 1080), fileLoader.loadImage("Block.png")), Block((800, 0), (80, 1080), fileLoader.loadImage("Block.png"))]
 blocks : list[Block] = level_gen.generate_blocks(str(level))
+scales : list[Scale] = [Scale(100, 100, 50, 50, fileLoader.loadImage("Scale.png"))]
+fishes : list[Fish] = [Fish(400, 200, 50, 50, fileLoader.loadImage("Fish.png"))]
 running = True
 
 while running:

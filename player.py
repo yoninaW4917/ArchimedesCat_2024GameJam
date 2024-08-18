@@ -54,7 +54,7 @@ class Player():
     wallJumpCooldown = 0  # Cooldown counter
     wallJumpCooldownTime = 10  # Number of frames to wait before allowing direction changes after a wall jump
 
-    def update(self, keysDownIn: dict[str, bool], blocks: list[Block]) -> None:
+    def update(self, keysDownIn: dict[str, bool], blocks: list[Block], scales, fishes) -> None:
         # Scale logic
         if (keysDownIn[self.keyBinds["scaleUp"]] or keysDownIn[self.keyBinds["scaleDown"]]) and self.showSlider == 0:
             self.showSlider = 1
@@ -181,8 +181,38 @@ class Player():
                         print("DEATH - water")
 
                 self.velo[1] = 0  # Stop vertical movement
+        for scale in scales:
+            scaleData = scale.get()
+            width = self.size[0] * self.catSize / 100
+            height = self.size[1] * self.catSize / 100
+
+            # Check for collision on the X and Y axes
+            if (self.pos[0] + width > scaleData['x'] and
+                self.pos[0] < scaleData['x'] + scaleData['w'] and
+                self.pos[1] + height > scaleData['y'] and
+                self.pos[1] < scaleData['y'] + scaleData['h']):
+
+                # Collision detected, collect the scale
+                self.scale_count += 1
+                scale.collected = True
+        scales[:] = [scale for scale in scales if not scale.collected]
 
 
+        for fish in fishes:
+            fishData = fish.get()
+            width = self.size[0] * self.catSize / 100
+            height = self.size[1] * self.catSize / 100
+
+            # Check for collision on the X and Y axes
+            if (self.pos[0] + width > fishData['x'] and
+                self.pos[0] < fishData['x'] + fishData['w'] and
+                self.pos[1] + height > fishData['y'] and
+                self.pos[1] < fishData['y'] + fishData['h']):
+
+                # Collision detected, collect the fish
+                self.fish_count += 1
+                fish.collectedFish = True
+                print ("Fish collected", self.fish_count)
         if onGround:
             if keysDownIn[self.keyBinds["jump"]]:
                 self.velo[1] -= 10 * self.catSize / 100
