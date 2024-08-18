@@ -1,6 +1,5 @@
 import pygame as py
 import json
-from objects.block import Block
 import fileLoader
 import os
 class LevelGenerator:
@@ -10,18 +9,20 @@ class LevelGenerator:
     def load_data(self,file)->dict:
         with open(file, 'r') as f:
             data = json.load(f)
-        return self.convert(data)
+        mydata = self.convert_to_loadImage(data,"blocks",2)
+        return mydata
     
-    def convert(self, data: dict) -> dict:
+    def convert_to_loadImage(self, data: dict, key:str, index:int) -> dict:
         for level, content in data.items():
-            for item in content["blocks"]:
-                item[2] = fileLoader.loadImage(item[2])
+            for item in content[key]:
+                item[index] = fileLoader.loadImage(item[index])
         return data
     
-    def generate_blocks(self, level:str) -> list[Block]:
-        self.blocks: list[Block] = [Block(*block) for block in self.data[level]["blocks"]]
-        return self.blocks
+    def generate_object(self, level:str, cls ,key:str) :
+        self.myobject: list[cls] = [cls(*item) for item in self.data[level][key]]
+        return self.myobject
     
+
     def get(self,level:str,key:str):
         try:
          return self.data[level][key]
