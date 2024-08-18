@@ -41,6 +41,8 @@ class Player():
         self.wallJumpCooldown = 0
         self.wallJumpCooldownTime = 10
 
+        self.fish_count = 0
+
         self.keyBinds: dict[str, int] = {
             "right": pygame.K_RIGHT,
             "left": pygame.K_LEFT,
@@ -181,6 +183,7 @@ class Player():
                         print("DEATH - water")
 
                 self.velo[1] = 0  # Stop vertical movement
+
         for scale in scales:
             scaleData = scale.get()
             width = self.size[0] * self.catSize / 100
@@ -200,8 +203,6 @@ class Player():
 
         for fish in fishes:
             fishData = fish.get()
-            width = self.size[0] * self.catSize / 100
-            height = self.size[1] * self.catSize / 100
 
             # Check for collision on the X and Y axes
             if (self.pos[0] + width > fishData['x'] and
@@ -213,6 +214,7 @@ class Player():
                 self.fish_count += 1
                 fish.collectedFish = True
                 print ("Fish collected", self.fish_count)
+
         if onGround:
             if keysDownIn[self.keyBinds["jump"]]:
                 self.velo[1] -= 10 * self.catSize / 100
