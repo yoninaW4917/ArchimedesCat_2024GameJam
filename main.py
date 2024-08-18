@@ -14,9 +14,10 @@ pygame.display.set_caption("Fat Cat")
 
 clock = pygame.time.Clock()
 
-cat : Player = Player((400, 400))
-blocks : list[Block] = [Block((0, 1000), (1920, 80), fileLoader.loadImage("Block.png")), Block((0, 0), (80, 1080), fileLoader.loadImage("Block.png")), Block((800, 0), (80, 1080), fileLoader.loadImage("Block.png"))]
+cat : Player = Player((300, 400))
+blocks : list[Block] = [Block((0, 1000), (1920, 80), fileLoader.loadImage("Block.png")), Block((0, 0), (80, 1080), fileLoader.loadImage("Block.png")), Block((400, 0), (80, 300), fileLoader.loadImage("Block.png")), Block((0, 0), (1920, 80), fileLoader.loadImage("Block.png")), Block((400, 400), (80, 800), fileLoader.loadImage("Block.png"))]
 waters = [Water(500, 400, 500, 80, fileLoader.loadImage("Water.png"))]  # Ensure the correct image is loaded
+
 running = True
 
 while running:
@@ -42,13 +43,13 @@ while running:
     # ------- DRAWING ------- #
     mainSurface.fill((255, 255, 255))
 
-    cat.draw(mainSurface)
-
     for block in blocks:
         block.draw(mainSurface)
     
     for water in waters:
         water.draw(mainSurface)  # Ensure the water objects are drawn
+
+    cat.draw(mainSurface)
 
     pygame.display.flip()
     clock.tick(60)
