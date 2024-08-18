@@ -2,6 +2,7 @@ import fileLoader
 import pygame
 from objects.block import Block
 import utils
+from objects.water import Water
 
 CAT_IMAGES = [(fileLoader.loadImage("skinnyCat.png"), (11, 70)), (fileLoader.loadImage("normalCat.png"), (71, 130)), (fileLoader.loadImage("fatCat.png"), (131, 190))]
 SLIDER_IMAGE = pygame.transform.scale(fileLoader.loadImage("slider.png"), (40, 120))
@@ -10,11 +11,18 @@ CAT_PAW_IMAGE = pygame.transform.scale(fileLoader.loadImage("catPaw.png"), (15, 
 class Player():
     def __init__(self, startingPos : tuple[int, int] = (0, 0), sizeIn : tuple=(100, 100)) -> None:
         # POS IS THE BOTTOM LEFT CORNER!
+        self.startingPos = startingPos  # Store startingPos as an instance variable
         self.pos = [startingPos[0], startingPos[1]]
         self.velo = [0, 0]
 
         # This is the image size
         self.size = [sizeIn[0], sizeIn[1]]
+
+        #DEATH COUNT
+        self.death_count = 0        
+        # Initialize a font object
+        self.font = fileLoader.loadFont(None, 36)
+
 
         # This is the slider value
         self.catSize = 100
@@ -35,7 +43,7 @@ class Player():
             "scaleConfirm" : pygame.K_SPACE
         }
 
-    def update(self, keysDownIn : dict[str, bool], blocks : list[Block]) -> None:
+    def update(self, keysDownIn : dict[str, bool], blocks : list[Block], waters : list[Water]) -> None:
         if (keysDownIn[self.keyBinds["scaleUp"]] or keysDownIn[self.keyBinds["scaleDown"]]) and self.showSlider == 0:
             self.showSlider = keysDownIn[self.keyBinds["scaleUp"]] - keysDownIn[self.keyBinds["scaleDown"]]
 
@@ -75,6 +83,34 @@ class Player():
             if not yUndo:
                 self.pos[1] -= self.velo[1]
 
+        for water in waters:
+            waterData = water.get()
+            width = self.size[0] * self.catSize / 100
+            height = self.size[1] * self.catSize / 100
+            yUndo = False
+
+            # Check for collision on the X and Y axes
+            if (self.pos[0] + width > waterData['x'] and
+                self.pos[0] < waterData['x'] + waterData['w'] and
+                self.pos[1] + height > waterData['y'] and
+                self.pos[1] < waterData['y'] + waterData['h']):
+
+                # Collision detected, resolve it
+                self.pos[1] -= self.velo[1]  # Undo the Y movement
+                self.velo[1] = 0             # Stop the Y velocity
+                yUndo = True
+
+                # Death handling
+                self.pos = [self.startingPos[0], self.startingPos[1]]
+                self.death_count += 1
+
+                # if self.death_count >= 3:
+                #     # Change level to 1 here or go to game over screen
+                #     return
+
+            if not yUndo:
+                self.pos[1] -= self.velo[1]
+
         self.pos[0] += self.velo[0]
         self.pos[1] += self.velo[1]
     
@@ -87,3 +123,6 @@ class Player():
 
 
         pygame.draw.circle(surfaceIn, (255, 0, 0), (self.pos[0], self.pos[1] + 10), 10)
+         # Render the death count
+        death_count_text = self.font.render(f'Deaths: {self.death_count}', True, (0, 0, 0))
+        surfaceIn.blit(death_count_text, (10, 10))  # Position the text at the top-left corner

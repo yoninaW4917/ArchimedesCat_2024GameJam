@@ -2,8 +2,11 @@ import pygame
 from player import Player
 from objects.block import Block
 import fileLoader
+from objects.water import Water
 
 pygame.display.init()
+pygame.font.init()  # Initialize the font module
+
 
 mainSurface = pygame.display.set_mode((1920, 1080))
 
@@ -13,7 +16,7 @@ clock = pygame.time.Clock()
 
 cat : Player = Player((400, 400))
 blocks : list[Block] = [Block((0, 1000), (1920, 80), fileLoader.loadImage("Block.png")), Block((0, 0), (80, 1080), fileLoader.loadImage("Block.png")), Block((800, 0), (80, 1080), fileLoader.loadImage("Block.png"))]
-
+waters = [Water(500, 400, 500, 80, fileLoader.loadImage("Water.png"))]  # Ensure the correct image is loaded
 running = True
 
 while running:
@@ -34,7 +37,7 @@ while running:
 
     keyDown = pygame.key.get_pressed()
 
-    cat.update(keyDown, blocks)
+    cat.update(keyDown, blocks, waters)
 
     # ------- DRAWING ------- #
     mainSurface.fill((255, 255, 255))
@@ -43,6 +46,9 @@ while running:
 
     for block in blocks:
         block.draw(mainSurface)
+    
+    for water in waters:
+        water.draw(mainSurface)  # Ensure the water objects are drawn
 
     pygame.display.flip()
     clock.tick(60)
