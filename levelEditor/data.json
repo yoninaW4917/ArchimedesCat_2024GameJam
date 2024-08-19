@@ -15,7 +15,8 @@
         ],
         "fish":[[[1600, 890]]],
         "starting_pos":[200,900],
-        "level_background":"Background1.png"
+        "level_background":"Background1.png",
+        "addon":"default.png"
     },
     "2": {
         "blocks":[               
@@ -33,7 +34,8 @@
         ],
         "fish":[[[1500, 920]]],
         "starting_pos":[200,900],
-        "level_background":"Background2.png"
+        "level_background":"Background2.png",
+        "addon":"default.png"
     },
     "3": {
         "blocks":[
@@ -53,7 +55,8 @@
         ],
         "fish":[[[1500, 910]]],
         "starting_pos":[200,900],
-        "level_background":"Background3.png"
+        "level_background":"Background3.png",
+        "addon":"default.png"
     },
     "4": {
         "blocks":[
@@ -70,7 +73,8 @@
         "scales":[],
         "fish":[],
         "starting_pos":[200,400],
-        "level_background":"Background4.png"
+        "level_background":"Background4.png",
+        "addon":"default.png"
     },
     "5": {
         "blocks":[
@@ -86,7 +90,8 @@
         "scales":[],
         "fish":[],
         "starting_pos":[200,400],
-        "level_background":"Background5.png"
+        "level_background":"Background5.png",
+        "addon":"default.png"
     },
     "6": {
         "blocks":[
@@ -188,7 +193,8 @@
             [[90, 210]]
         ],
         "starting_pos":[200,900],
-        "level_background":"Background8.png"
+        "level_background":"Background8.png",
+        "addon":"default.png"
     },
     "9": {
         "blocks":[
@@ -211,7 +217,8 @@
         "scales":[],
         "fish":[],
         "starting_pos":[200,400],
-        "level_background":"Background9.png"
+        "level_background":"Background9.png",
+        "addon":"default.png"
     },
     "10": {
         "blocks":[
@@ -227,6 +234,7 @@
         "scales":[],
         "fish":[],
         "starting_pos":[200,400],
-        "level_background":"Background10.png"
+        "level_background":"Background10.png",
+        "addon":"default.png"
     }
 }
