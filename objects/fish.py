@@ -7,7 +7,7 @@ class Fish:
 
         self.pos = posIn
 
-        self.size = [250, 130]
+        self.size = [188, 98]
 
         self.frame = 0
 
