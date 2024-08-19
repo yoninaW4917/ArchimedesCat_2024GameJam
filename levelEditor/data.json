@@ -15,8 +15,7 @@
         ],
         "fish":[[[1600, 890]]],
         "starting_pos":[200,900],
-        "level_background":"Background1.png",
-        "addon":"default.png"
+        "level_background":"Background1.png"
     },
     "2": {
         "blocks":[               
@@ -34,8 +33,7 @@
         ],
         "fish":[[[1500, 920]]],
         "starting_pos":[200,900],
-        "level_background":"Background2.png",
-        "addon":"default.png"
+        "level_background":"Background2.png"
     },
     "3": {
         "blocks":[
@@ -55,8 +53,7 @@
         ],
         "fish":[[[1500, 910]]],
         "starting_pos":[200,900],
-        "level_background":"Background3.png",
-        "addon":"default.png"
+        "level_background":"Background3.png"
     },
     "4": {
         "blocks":[
@@ -77,8 +74,7 @@
         ],
         "fish":[[[1653,50]]],
         "starting_pos":[200,900],
-        "level_background":"Background4.png",
-        "addon":"default.png"
+        "level_background":"Background4.png"
     },
     "5": {
         "blocks":[
@@ -94,8 +90,7 @@
         "scales":[],
         "fish":[],
         "starting_pos":[200,400],
-        "level_background":"Background5.png",
-        "addon":"default.png"
+        "level_background":"Background5.png"
     },
     "6": {
         "blocks":[
@@ -160,7 +155,7 @@
         ],
         "starting_pos":[200,700],
         "level_background":"Background7.png",
-        "addon":"Background6Addon.png"
+        "addon":"Background7Addon.png"
     },
     "8": {
         "blocks":[
@@ -197,8 +192,7 @@
             [[90, 210]]
         ],
         "starting_pos":[200,900],
-        "level_background":"Background8.png",
-        "addon":"default.png"
+        "level_background":"Background8.png"
     },
     "9": {
         "blocks":[
@@ -225,8 +219,7 @@
     ],
         "fish":[[[1700,700]]],
         "starting_pos":[200,400],
-        "level_background":"Background9.png",
-        "addon":"default.png"
+        "level_background":"Background9.png"
     },
     "10": {
         "blocks":[
@@ -242,7 +235,6 @@
         "scales":[],
         "fish":[],
         "starting_pos":[485,900],
-        "level_background":"Background10.png",
-        "addon":"default.png"
+        "level_background":"Background10.png"
     }
 }

@@ -1,3 +1,5 @@
+import glob
+from numpy import block
 import pygame
 from player import Player
 from objects.block import Block
@@ -14,17 +16,27 @@ pygame.display.set_caption("Fat Cat")
 
 clock = pygame.time.Clock()
 level_gen = LevelGenerator()
-level: int = 10
+level: int = 1
 cat : Player = Player(level_gen.get(str(level), "starting_pos"),(100,100))
 blocks : list[Block] = level_gen.generate_object(str(level), Block, "blocks")
 fishes : list[Fish] = level_gen.generate_object(str(level), Fish, "fish")
 scales : list[Scale] = level_gen.generate_object(str(level), Scale, "scales")
-addon = fileLoader.loadImage(level_gen.get(str(level), "addon"))
-addonRect = addon.get_rect()
+
 running = True
 
 def loadNewLevel(level : str) -> pygame.image:
-    
+    global blocks, fishes, scales, addon, addonRect
+
+    cat.pos = level_gen.get(str(level), "starting_pos")
+
+    if level in ("6", "7"):
+        addon = fileLoader.loadImage(level_gen.get(str(level), "addon")).convert_alpha()
+        addonRect = addon.get_rect()
+
+    blocks = level_gen.generate_object(str(level), Block, "blocks")
+    fishes = level_gen.generate_object(str(level), Fish, "fish")
+    scales = level_gen.generate_object(str(level), Scale, "scales")
+
     return fileLoader.loadImage(level_gen.get(str(level), "level_background")).convert()
 
 background = loadNewLevel(level)
@@ -47,10 +59,16 @@ while running:
 
     keyDown = pygame.key.get_pressed()
 
-    cat.update(keyDown, blocks, scales, fishes)
+    if cat.update(keyDown, blocks, scales, fishes):
+        # Level complete
+        level += 1
+
+        print(level)
+
+        background = loadNewLevel(str(level))
 
     # ------- DRAWING ------- #
-    mainSurface.fill((255, 255, 255))
+    mainSurface.fill((0, 0, 0))
 
     # for block in blocks:
     #     block.draw(mainSurface)
@@ -66,9 +84,9 @@ while running:
         for scale in scales:
             scale.draw(mainSurface)
 
-    mainSurface.blit(addon, addonRect)
+    if (level in (6, 7)):
+        mainSurface.blit(addon, addonRect)
 
     pygame.display.flip()
     clock.tick(60)
-
     print(clock.get_fps())
