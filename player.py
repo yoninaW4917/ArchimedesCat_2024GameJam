@@ -532,7 +532,7 @@ class Player():
 
         self.poof.draw([self.pos[0], self.pos[1]], self.catSize, surfaceIn)
 
-
+        print("hello")
 
         # Draw the slider if needed
         if self.showSlider != 0:
