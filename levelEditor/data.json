@@ -9,8 +9,8 @@
                 [[800, 600], [500, 450], "Block.png", false]
             ],
         "scales":[],
-        "fish":[[[400, 200]]],
-        "starting_pos":[400,400],
+        "fish":[[[1600, 890]]],
+        "starting_pos":[200,900],
         "level_background":"Background1.png"
     },
     "2": {
@@ -23,8 +23,8 @@
             [[700, 0], [500,925], "Block.png", false]
         ],
         "scales":[],
-        "fish":[],
-        "starting_pos":[400,400],
+        "fish":[[[1500, 890]]],
+        "starting_pos":[200,900],
         "level_background":"Background2.png"
     },
     "3": {
@@ -39,8 +39,8 @@
 
         ],
         "scales":[],
-        "fish":[],
-        "starting_pos":[200,400],
+        "fish":[[[1500, 890]]],
+        "starting_pos":[200,900],
         "level_background":"Background3.png"
     },
     "4": {
@@ -120,9 +120,9 @@
         ],
         "scales":[],
         "fish":[
-            [[1450, 860]]
+            [[65, 185]]
         ],
-        "starting_pos":[200,400],
+        "starting_pos":[200,900],
         "level_background":"Background8.png"
     },
     "9": {
