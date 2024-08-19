@@ -22,6 +22,8 @@ class Player():
         self.pos = [startingPos[0], startingPos[1]]
         self.velo = [0, 0]
 
+        self.get_scale_count_level = 0
+
         # Sets shown velocity
         self.svelo = [0, 0]
 
@@ -531,8 +533,6 @@ class Player():
         surfaceIn.blit(self.current_image, [self.pos[0], self.pos[1]])
 
         self.poof.draw([self.pos[0], self.pos[1]], self.catSize, surfaceIn)
-
-        print("hello")
 
         # Draw the slider if needed
         if self.showSlider != 0:
