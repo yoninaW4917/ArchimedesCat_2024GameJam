@@ -128,7 +128,6 @@ class Player():
                 self.catSize = newCatSize
                 self.showSlider = 0
                 self.scaleDirection = 1  # Reset direction for next time
-                print(self.catSize)
 
                 self.slowTime = False
 
@@ -242,6 +241,7 @@ class Player():
             if keysDownIn[self.keyBinds["jump"]]:
                 # Apply a jump force upwards
                 self.velo[1] -= 5 * self.catSize / 100  # Adjust this value to control jump strength
+                self.velo[1] = utils.clamp(self.velo[1], -16, 9999)
 
                 # Apply a force to move away from the wall
                 self.velo[0] = -15 * min(1, 100 / self.catSize) if onWall == 1 else 15 * min(1, 100 / self.catSize)  # Adjust this value to control horizontal movement away from the wall

@@ -1,5 +1,4 @@
 import glob
-from numpy import block
 import pygame
 from player import Player
 from objects.block import Block
@@ -10,7 +9,7 @@ import fileLoader
 
 pygame.display.init()
 
-mainSurface = pygame.display.set_mode((1920, 1080))
+mainSurface = pygame.display.set_mode((1920, 1080), pygame.FULLSCREEN)
 
 pygame.display.set_caption("Fat Cat")
 
@@ -28,7 +27,6 @@ def loadNewLevel(level : str) -> pygame.image:
     global blocks, fishes, scales, addon, addonRect
 
     cat.pos = level_gen.get(str(level), "starting_pos").copy()
-    print(cat.pos)
 
     if level in ("6", "7"):
         addon = fileLoader.loadImage(level_gen.get(str(level), "addon")).convert_alpha()
@@ -63,8 +61,6 @@ while running:
     if cat.update(keyDown, blocks, scales, fishes):
         # Level complete
         level += 1
-
-        print(level)
 
         background = loadNewLevel(str(level))
 
