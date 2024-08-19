@@ -102,6 +102,9 @@ class Player():
                         print("DEATH - cat squashed")
                         self.pos = [self.startingPos[0], self.startingPos[1]]
                         self.death_count += 1
+                        scale.collected = False
+                        fish.collectedFish = False
+
                         
 
                 self.pos[0] += (self.catSize - newCatSize) / 4
@@ -166,7 +169,9 @@ class Player():
                     if onWall != 0:
                         print("DEATH - water")
                         self.pos = [self.startingPos[0], self.startingPos[1]]
-                        self.death_count += 1
+                        self.death_count += 1                        
+                        scale.collected = False
+                        fish.collectedFish = False
 
         # Y-axis collision detection and handling
         self.pos[1] += svelo[1]
@@ -193,6 +198,8 @@ class Player():
                         print("DEATH - water")
                         self.pos = [self.startingPos[0], self.startingPos[1]]
                         self.death_count += 1
+                        scale.collected = False
+                        fish.collectedFish = False
 
                 self.velo[1] = 0  # Stop vertical movement
 
@@ -210,6 +217,7 @@ class Player():
                 # Collision detected, collect the scale
                 self.scale_count += 1
                 scale.collected = True
+                
 
         scales[:] = [scale for scale in scales if not scale.collected]
 
