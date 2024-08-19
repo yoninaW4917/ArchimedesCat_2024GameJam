@@ -7,18 +7,18 @@ class Scale:
 
         self.pos = posIn
 
-        self.images = [fileLoader.loadImage("scale-0.png"),
-                       fileLoader.loadImage("scale-1.png"),
-                       fileLoader.loadImage("scale-2.png"),
-                       fileLoader.loadImage("scale-3.png"),
-                       fileLoader.loadImage("scale-4.png"),
-                       fileLoader.loadImage("scale-5.png"),
-                       fileLoader.loadImage("scale-6.png"),
-                       fileLoader.loadImage("scale-7.png"),
-                       fileLoader.loadImage("scale-8.png"),
-                       fileLoader.loadImage("scale-9.png"),
-                       fileLoader.loadImage("scale-10.png"),
-                       fileLoader.loadImage("scale-11.png")]
+        self.images = [fileLoader.loadImage("scale/scale-0.png"),
+                       fileLoader.loadImage("scale/scale-1.png"),
+                       fileLoader.loadImage("scale/scale-2.png"),
+                       fileLoader.loadImage("scale/scale-3.png"),
+                       fileLoader.loadImage("scale/scale-4.png"),
+                       fileLoader.loadImage("scale/scale-5.png"),
+                       fileLoader.loadImage("scale/scale-6.png"),
+                       fileLoader.loadImage("scale/scale-7.png"),
+                       fileLoader.loadImage("scale/scale-8.png"),
+                       fileLoader.loadImage("scale/scale-9.png"),
+                       fileLoader.loadImage("scale/scale-10.png"),
+                       fileLoader.loadImage("scale/scale-11.png")]
 
         self.size = [80, 183]
 

@@ -31,6 +31,7 @@ def loadNewLevel(level : str) -> pygame.image:
     global blocks, fishes, scales, addon, addonRect
 
     cat.pos = level_gen.get(str(level), "starting_pos").copy()
+    cat.catSize = 100
 
     if level in ("6", "7"):
         addon = fileLoader.loadImage(level_gen.get(str(level), "addon")).convert_alpha()
