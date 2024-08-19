@@ -4,6 +4,7 @@ from objects.block import Block
 import utils
 from objects.scale import Scale
 from objects.fish import Fish
+from objects.poof import Poof
 
 CAT_IMAGES = [
     (fileLoader.loadImage("skinnyCat.png"), (11, 70)),
@@ -14,7 +15,7 @@ SLIDER_IMAGE = pygame.transform.scale(fileLoader.loadImage("slider.png"), (40, 1
 CAT_PAW_IMAGE = pygame.transform.scale(fileLoader.loadImage("catPaw.png"), (15, 15))
 
 class Player():
-    def __init__(self, startingPos: list[int, int] = (0, 0), sizeIn: list = (100, 100)) -> None:
+    def __init__(self, startingPos: list[int, int] = (0, 0), sizeIn: list = (100, 100), poof: Poof = None) -> None:
         # POS IS THE BOTTOM LEFT CORNER!
         self.startingPos = startingPos  # Store startingPos as an instance variable
         self.pos = [startingPos[0], startingPos[1]]
@@ -47,6 +48,9 @@ class Player():
         # Initialize fish and scales variables
         self.fish_count = 0
         self.scale_count = 0
+
+        # Poof
+        self.poof = poof
 
         self.keyBinds: dict[str, int] = {
             "right": pygame.K_RIGHT,
@@ -103,8 +107,15 @@ class Player():
                 # Check for potential collisions before resizing
                 self.handlePreResizeCollision(blocks)
 
+                self.poof.isDrawing = True
+
+
                 # Apply the size change without affecting velocity
                 newCatSize = 100 + self.scaleTimer / 60 * 100
+
+                self.poof.size = "lar" if newCatSize >= 160 else "med"
+                print(self.poof.size)
+                print(newCatSize)
 
                 # Get current dimensions of the player
                 width = self.size[0] * newCatSize / 100
@@ -126,6 +137,7 @@ class Player():
                 self.pos[1] += (self.catSize - newCatSize) / 4
 
                 self.catSize = newCatSize
+
                 self.showSlider = 0
                 self.scaleDirection = 1  # Reset direction for next time
 
@@ -304,6 +316,9 @@ class Player():
         cat_width = self.size[0] * self.catSize / 100
         cat_height = self.size[1] * self.catSize / 100
         surfaceIn.blit(pygame.transform.scale(self.image, (cat_width, cat_height)), self.pos)
+
+        print(self.poof.size)
+        self.poof.draw([self.pos[0], self.pos[1]], self.catSize, surfaceIn)
 
         # Draw the slider if needed
         if self.showSlider != 0:

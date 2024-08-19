@@ -4,6 +4,7 @@ from player import Player
 from objects.block import Block
 from objects.fish import Fish
 from objects.scale import Scale
+from objects.poof import Poof
 from levelEditor.levelEditor import LevelGenerator
 import fileLoader
 
@@ -16,7 +17,8 @@ pygame.display.set_caption("Fat Cat")
 clock = pygame.time.Clock()
 level_gen = LevelGenerator()
 level: int = 1
-cat : Player = Player(level_gen.get(str(level), "starting_pos"),(100,100))
+poof = Poof()
+cat : Player = Player(level_gen.get(str(level), "starting_pos"),(100,100), poof)
 blocks : list[Block] = level_gen.generate_object(str(level), Block, "blocks")
 fishes : list[Fish] = level_gen.generate_object(str(level), Fish, "fish")
 scales : list[Scale] = level_gen.generate_object(str(level), Scale, "scales")
