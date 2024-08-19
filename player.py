@@ -67,8 +67,9 @@ class Player():
     #function to reset the scales when you die
     def resetScales(self, scales: list[Scale]) -> None:
         for scale in scales:
-            scale.collected = False
+            scale.reset()
             print("Scale reset")
+
     #function to reset the fish when you die
     def resetFish(self, fishes: list[Fish]) -> None:
         for fish in fishes:
@@ -228,10 +229,6 @@ class Player():
                 # Collision detected, collect the scale
                 self.scale_count += 1
                 scale.collected = True
-                
-
-        scales[:] = [scale for scale in scales if not scale.collected]
-
 
         for fish in fishes:
             fishData = fish.get()
