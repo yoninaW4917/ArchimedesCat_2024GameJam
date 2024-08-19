@@ -60,7 +60,7 @@
             [[0, 1000], [1920, 80], "Block.png", false],
             [[0, -80], [1920, 80], "Block.png", false],
             [[-80, 0], [80, 1080], "Block.png", false],
-            [[1920, 0], [80, 1080], "Block.png", false],
+            [[1840, 0], [80, 1080], "Block.png", false],
 
             [[600, 500], [500, 1000], "Block.png", false],
             [[1100, 700], [200, 180], "Block.png", false],
@@ -78,10 +78,10 @@
     },
     "5": {
         "blocks":[
-            [[0, 1000], [1920, 80], "Block.png", false],
+            [[0, 1000], [1920, 80], "Block.png", true],
             [[0, -80], [1920, 80], "Block.png", false],
             [[-80, 0], [80, 1080], "Block.png", false],
-            [[1920, 0], [80, 1080], "Block.png", true],
+            [[1920, 0], [80, 1080], "Block.png", false],
 
             [[80, 700], [350, 80], "Block.png", false],
             [[810, 700], [300, 80], "Block.png", false],
