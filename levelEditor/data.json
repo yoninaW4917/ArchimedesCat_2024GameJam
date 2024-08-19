@@ -137,7 +137,7 @@
         "scales":[],
         "fish":[],
         "starting_pos":[200,400],
-        "level_background":"Background6.png"
+        "level_background":"Background7.png"
     },
     "8": {
         "blocks":[
@@ -167,7 +167,7 @@
         ],
         "scales":[],
         "fish":[
-            [[65, 185]]
+            [[90, 210]]
         ],
         "starting_pos":[200,900],
         "level_background":"Background8.png"
