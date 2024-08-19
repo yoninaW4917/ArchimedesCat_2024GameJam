@@ -4,6 +4,7 @@ from objects.block import Block
 import utils
 from objects.scale import Scale
 from objects.fish import Fish
+import math
 from objects.poof import Poof
 
 CAT_IMAGES = [
