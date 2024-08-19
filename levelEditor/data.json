@@ -92,6 +92,41 @@
         "starting_pos":[200,400],
         "level_background":"Background6.png"
     },
+    "7": {
+        "blocks":[
+            [[0, 1000], [1920, 80], "Block.png", false],
+            [[0, 0], [1920, 80], "Block.png", false], 
+            [[0, 0], [80, 1080], "Block.png", false], 
+            [[1840, 0], [80, 1080], "Block.png", false],
+
+            [[200, 830], [200, 200], "Block.png", false],
+
+            [[600, 975], [640, 100], "Block.png", true],
+            [[700, 950], [20, 40], "Block.png", false],
+            [[720, 925], [50, 70], "Block.png", false],
+            [[770, 945], [40, 70], "Block.png", false],
+
+            [[1000, 950], [20, 40], "Block.png", false],
+            [[1020, 925], [50, 70], "Block.png", false],
+            [[1070, 945], [40, 70], "Block.png", false],
+
+            [[1350, 600], [35, 600], "Block.png", false],
+            [[1315, 600], [70, 30], "Block.png", false],
+            [[1575, 600], [35, 600], "Block.png", false],
+            [[1575, 600], [70, 30], "Block.png", false],
+
+            [[1360, 980], [225, 30], "Block.png", true],
+
+            [[500, 300], [600, 50], "Block.png", false],
+            [[1000, 450], [50, 250], "Block.png", false]
+
+            
+        ],
+        "scales":[],
+        "fish":[],
+        "starting_pos":[200,400],
+        "level_background":"Background6.png"
+    },
     "8": {
         "blocks":[
             [[0, 1000], [1920, 80], "Block.png", false],
