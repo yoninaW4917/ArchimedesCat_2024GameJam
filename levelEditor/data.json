@@ -237,7 +237,7 @@
         ],
         "scales":[],
         "fish":[],
-        "starting_pos":[200,400],
+        "starting_pos":[485,900],
         "level_background":"Background10.png",
         "addon":"default.png"
     }
