@@ -18,10 +18,9 @@ level: int = 1
 cat : Player = Player(level_gen.get(str(level), "starting_pos"),(100,100))
 #blocks : list[Block] = [Block((0, 1000), (1920, 80), fileLoader.loadImage("Block.png")), Block((0, 0), (80, 1080), fileLoader.loadImage("Block.png")), Block((800, 0), (80, 1080), fileLoader.loadImage("Block.png"))]
 blocks : list[Block] = level_gen.generate_object(str(level), Block, "blocks")
-
 #scales : list[Scale] = [Scale((100, 100), (50, 50), fileLoader.loadImage("Scale.png"))]
 fishes : list[Fish] = level_gen.generate_object(str(level), Fish, "fish")
-
+scales : list[Scale] = level_gen.generate_object(str(level), Scale, "scales")
 running = True
 
 while running:
@@ -58,6 +57,9 @@ while running:
 
     for fish in fishes:
         fish.draw(mainSurface)
+    
+    for scale in scales:
+        scale.draw(mainSurface)
 
     pygame.display.flip()
     clock.tick(60)

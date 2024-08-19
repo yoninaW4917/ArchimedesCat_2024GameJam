@@ -8,7 +8,7 @@
 
                 [[800, 600], [500, 450], "Block.png", false]
             ],
-        "scales":[],
+        "scales":[[[800, 200]]],
         "fish":[[[400, 200]]],
         "starting_pos":[400,400],
         "level_background":"Background1.png"
