@@ -1,3 +1,5 @@
+import glob
+from numpy import block
 import pygame
 from player import Player
 from objects.block import Block
@@ -14,7 +16,7 @@ pygame.display.set_caption("Fat Cat")
 
 clock = pygame.time.Clock()
 level_gen = LevelGenerator()
-level: int = 8
+level: int = 1
 cat : Player = Player(level_gen.get(str(level), "starting_pos"),(100,100))
 blocks : list[Block] = level_gen.generate_object(str(level), Block, "blocks")
 fishes : list[Fish] = level_gen.generate_object(str(level), Fish, "fish")
@@ -22,7 +24,14 @@ scales : list[Scale] = level_gen.generate_object(str(level), Scale, "scales")
 running = True
 
 def loadNewLevel(level : str) -> pygame.image:
-    
+    global blocks, fishes, scales
+
+    cat.pos = level_gen.get(str(level), "starting_pos")
+
+    blocks = level_gen.generate_object(str(level), Block, "blocks")
+    fishes = level_gen.generate_object(str(level), Fish, "fish")
+    scales = level_gen.generate_object(str(level), Scale, "scales")
+
     return fileLoader.loadImage(level_gen.get(str(level), "level_background")).convert()
 
 background = loadNewLevel(level)
@@ -45,7 +54,13 @@ while running:
 
     keyDown = pygame.key.get_pressed()
 
-    cat.update(keyDown, blocks, scales, fishes)
+    if cat.update(keyDown, blocks, scales, fishes):
+        # Level complete
+        level += 1
+
+        print(level)
+
+        background = loadNewLevel(str(level))
 
     # ------- DRAWING ------- #
     mainSurface.fill((255, 255, 255))
@@ -66,5 +81,3 @@ while running:
 
     pygame.display.flip()
     clock.tick(60)
-
-    print(clock.get_fps())

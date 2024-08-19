@@ -70,11 +70,6 @@ class Player():
             scale.reset()
             print("Scale reset")
 
-    #function to reset the fish when you die
-    def resetFish(self, fishes: list[Fish]) -> None:
-        for fish in fishes:
-            fish.collectedFish = False
-
     def update(self, keysDownIn: dict[str, bool], blocks: list[Block], scales: list[Scale], fishes: list[Fish]) -> None:
         # Scale logic
         if (keysDownIn[self.keyBinds["scaleUp"]] or keysDownIn[self.keyBinds["scaleDown"]]) and self.showSlider == 0:
@@ -117,7 +112,6 @@ class Player():
                         self.pos = [self.startingPos[0], self.startingPos[1]]
                         self.death += 1
                         self.resetScales(scales)
-                        self.resetFish(fishes)
 
                 self.pos[0] += (self.catSize - newCatSize) / 4
                 self.pos[1] += (self.catSize - newCatSize) / 4
@@ -183,7 +177,6 @@ class Player():
                         self.pos = [self.startingPos[0], self.startingPos[1]]
                         self.death += 1                        
                         self.resetScales(scales)
-                        self.resetFish(fishes)
 
         # Y-axis collision detection and handling
         self.pos[1] += svelo[1]
@@ -211,7 +204,6 @@ class Player():
                         self.pos = [self.startingPos[0], self.startingPos[1]]
                         self.death += 1
                         self.resetScales(scales)
-                        self.resetFish(fishes)
 
                 self.velo[1] = 0  # Stop vertical movement
 
@@ -229,20 +221,6 @@ class Player():
                 # Collision detected, collect the scale
                 self.scale_count += 1
                 scale.collected = True
-
-        for fish in fishes:
-            fishData = fish.get()
-
-            # Check for collision on the X and Y axes
-            if (self.pos[0] + width > fishData['x'] and
-                self.pos[0] < fishData['x'] + fishData['w'] and
-                self.pos[1] + height > fishData['y'] and
-                self.pos[1] < fishData['y'] + fishData['h']):
-
-                # Collision detected, collect the fish
-                self.fish_count += 1
-                fish.collectedFish = True
-                print ("Fish collected", self.fish_count)
 
         if onGround:
             if keysDownIn[self.keyBinds["jump"]]:
@@ -263,6 +241,18 @@ class Player():
                 # Prevent continuous wall jumping and set cooldown
                 self.wallJumpCooldown = self.wallJumpCooldownTime
                 onWall = 0
+
+        for fish in fishes:
+            fishData = fish.get()
+
+            # Check for collision on the X and Y axes
+            if (self.pos[0] + width > fishData['x'] and
+                self.pos[0] < fishData['x'] + fishData['w'] and
+                self.pos[1] + height > fishData['y'] and
+                self.pos[1] < fishData['y'] + fishData['h']):
+
+                # Collision detected, collect the fish
+                return True
 
     def handlePreResizeCollision(self, blocks: list[Block]) -> None:
         """Adjust position before resizing to avoid clipping into walls."""
