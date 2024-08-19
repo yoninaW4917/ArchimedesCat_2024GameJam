@@ -47,6 +47,8 @@ class Player():
         # Initialize fish and scales variables
         self.fish_count = 0
         self.scale_count = 0
+        # Initialize a font object
+        self.font = fileLoader.loadFont(None, 36)
 
         self.keyBinds: dict[str, int] = {
             "right": pygame.K_RIGHT,
@@ -229,8 +231,9 @@ class Player():
                 self.pos[1] < scaleData['y'] + scaleData['h']):
 
                 # Collision detected, collect the scale
-                self.scale_count += 1
-                scale.collected = True
+                if not scale.collected:
+                    self.scale_count += 1
+                    scale.collected = True
 
         if onGround:
             if keysDownIn[self.keyBinds["jump"]]:
@@ -314,3 +317,9 @@ class Player():
             # Draw the cat paw based on the current scale
             pawPos = (sliderPos[0] + 25, sliderPos[1] + 60 - int(self.scaleTimer))
             surfaceIn.blit(CAT_PAW_IMAGE, pawPos)
+
+            #Counting the scales and fish
+        scale_count_text = self.font.render(f'Scales: {self.scale_count}', True, (0, 0, 0))
+        surfaceIn.blit(scale_count_text, (100, 100))  # Position the text at the top-left corner of the screen
+#        fish_count_text = self.font.render(f'Fish: {self.fish_count}', True, (0, 0, 0))
+#       surfaceIn.blit(fish_count_text, (500, 100))  # Position the text at the top-left corner of the screen

@@ -8,6 +8,7 @@ from levelEditor.levelEditor import LevelGenerator
 import fileLoader
 
 pygame.display.init()
+pygame.font.init()
 
 mainSurface = pygame.display.set_mode((1920, 1080))
 
