@@ -19,7 +19,7 @@ class Poof:
         self.val = 0
         self.frame = 0
 
-    def draw(self, posIn : list[int, int], sizeIn : list[int, int], surfaceIn):
+    def draw(self, posIn : list[int, int], sizeIn, surfaceIn):
         if self.size == "med":
             self.scale = sizeIn * 2 / 295
             dimensions = (self.scale * 295, self.scale * 216)
