@@ -29,10 +29,9 @@ class Scale:
         self.val = 0
 
     def draw(self, surfaceIn):
-        if not self.collected:
-            surfaceIn.blit(self.images[self.frame], (self.pos[0], self.pos[1]-20))  # Corrected the blit method to use a tuple for position
-            self.val += 1
-            self.frame = math.floor(self.val / 10) % 11
+        surfaceIn.blit(self.images[self.frame], (self.pos[0], self.pos[1]-20))  # Corrected the blit method to use a tuple for position
+        self.val += 1
+        self.frame = math.floor(self.val / 10) % 11
 
 
     def get(self) -> dict[str, int]:

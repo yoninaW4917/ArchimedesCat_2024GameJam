@@ -2,6 +2,8 @@ import fileLoader
 import pygame
 from objects.block import Block
 import utils
+from objects.scale import Scale
+from objects.fish import Fish
 
 CAT_IMAGES = [
     (fileLoader.loadImage("skinnyCat.png"), (11, 70)),
@@ -12,7 +14,7 @@ SLIDER_IMAGE = pygame.transform.scale(fileLoader.loadImage("slider.png"), (40, 1
 CAT_PAW_IMAGE = pygame.transform.scale(fileLoader.loadImage("catPaw.png"), (15, 15))
 
 class Player():
-    def __init__(self, startingPos : list[int, int] = (0, 0), sizeIn : list=(100, 100)) -> None:
+    def __init__(self, startingPos: list[int, int] = (0, 0), sizeIn: list = (100, 100)) -> None:
         # POS IS THE BOTTOM LEFT CORNER!
         self.startingPos = startingPos  # Store startingPos as an instance variable
         self.pos = [startingPos[0], startingPos[1]]
@@ -42,6 +44,7 @@ class Player():
         self.wallJumpCooldown = 0
         self.wallJumpCooldownTime = 10
 
+        # Initialize fish and scales variables
         self.fish_count = 0
         self.scale_count = 0
 
@@ -60,6 +63,16 @@ class Player():
     # Add these variables in your class initialization
     wallJumpCooldown = 0  # Cooldown counter
     wallJumpCooldownTime = 10  # Number of frames to wait before allowing direction changes after a wall jump
+
+    #function to reset the scales when you die
+    def resetScales(self, scales: list[Scale]) -> None:
+        for scale in scales:
+            scale.collected = False
+            print("Scale reset")
+    #function to reset the fish when you die
+    def resetFish(self, fishes: list[Fish]) -> None:
+        for fish in fishes:
+            fish.collectedFish = False
 
     def update(self, keysDownIn: dict[str, bool], blocks: list[Block], scales, fishes) -> None:
         # Scale logic
@@ -101,11 +114,9 @@ class Player():
                             self.pos[1] < blockData['y'] + blockData['h']):
                         print("DEATH - cat squashed")
                         self.pos = [self.startingPos[0], self.startingPos[1]]
-                        self.death_count += 1
-                        scale.collected = False
-                        fish.collectedFish = False
-
-                        
+                        self.death += 1
+                        self.resetScales(scales)
+                        self.resetFish(fishes)
 
                 self.pos[0] += (self.catSize - newCatSize) / 4
                 self.pos[1] += (self.catSize - newCatSize) / 4
@@ -169,9 +180,9 @@ class Player():
                     if onWall != 0:
                         print("DEATH - water")
                         self.pos = [self.startingPos[0], self.startingPos[1]]
-                        self.death_count += 1                        
-                        scale.collected = False
-                        fish.collectedFish = False
+                        self.death += 1                        
+                        self.resetScales(scales)
+                        self.resetFish(fishes)
 
         # Y-axis collision detection and handling
         self.pos[1] += svelo[1]
@@ -197,9 +208,9 @@ class Player():
                     if onRoof or onGround:
                         print("DEATH - water")
                         self.pos = [self.startingPos[0], self.startingPos[1]]
-                        self.death_count += 1
-                        scale.collected = False
-                        fish.collectedFish = False
+                        self.death += 1
+                        self.resetScales(scales)
+                        self.resetFish(fishes)
 
                 self.velo[1] = 0  # Stop vertical movement
 
