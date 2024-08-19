@@ -9,7 +9,7 @@ import fileLoader
 
 pygame.display.init()
 
-mainSurface = pygame.display.set_mode((1920, 1080), pygame.FULLSCREEN)
+mainSurface = pygame.display.set_mode((1920, 1080))
 
 pygame.display.set_caption("Fat Cat")
 
