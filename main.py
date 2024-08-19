@@ -71,7 +71,6 @@ while running:
         # Level complete
         level += 1
         cat.set_scale_count_level(0)
-        print(cat.get_scale_count_level())
         background = loadNewLevel(str(level))
 
     # ------- DRAWING ------- #
