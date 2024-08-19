@@ -21,6 +21,12 @@ fishes : list[Fish] = level_gen.generate_object(str(level), Fish, "fish")
 scales : list[Scale] = level_gen.generate_object(str(level), Scale, "scales")
 running = True
 
+def loadNewLevel(level : str) -> pygame.image:
+    
+    return fileLoader.loadImage(level_gen.get(str(level), "level_background")).convert()
+
+background = loadNewLevel(level)
+
 while running:
     # ------- EVENTS ------- #
 
@@ -43,13 +49,11 @@ while running:
 
     # ------- DRAWING ------- #
     mainSurface.fill((255, 255, 255))
-    background = fileLoader.loadImage(level_gen.get(str(level), "level_background"))
-    imageRect = background.get_rect()
 
-    for block in blocks:
-        block.draw(mainSurface)
+    # for block in blocks:
+    #     block.draw(mainSurface)
 
-    mainSurface.blit(background, imageRect)
+    mainSurface.blit(background, (0, 0))
 
     cat.draw(mainSurface)
 
@@ -62,3 +66,5 @@ while running:
 
     pygame.display.flip()
     clock.tick(60)
+
+    print(clock.get_fps())

@@ -75,7 +75,7 @@ class Player():
         for fish in fishes:
             fish.collectedFish = False
 
-    def update(self, keysDownIn: dict[str, bool], blocks: list[Block], scales, fishes) -> None:
+    def update(self, keysDownIn: dict[str, bool], blocks: list[Block], scales: list[Scale], fishes: list[Fish]) -> None:
         # Scale logic
         if (keysDownIn[self.keyBinds["scaleUp"]] or keysDownIn[self.keyBinds["scaleDown"]]) and self.showSlider == 0:
             self.showSlider = 1
