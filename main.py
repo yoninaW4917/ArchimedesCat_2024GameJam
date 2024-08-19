@@ -27,7 +27,8 @@ running = True
 def loadNewLevel(level : str) -> pygame.image:
     global blocks, fishes, scales, addon, addonRect
 
-    cat.pos = level_gen.get(str(level), "starting_pos")
+    cat.pos = level_gen.get(str(level), "starting_pos").copy()
+    print(cat.pos)
 
     if level in ("6", "7"):
         addon = fileLoader.loadImage(level_gen.get(str(level), "addon")).convert_alpha()
@@ -89,4 +90,3 @@ while running:
 
     pygame.display.flip()
     clock.tick(60)
-    print(clock.get_fps())
