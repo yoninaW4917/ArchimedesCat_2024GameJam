@@ -70,9 +70,13 @@
             [[1360, 700], [200, 180], "Block.png", false],
             [[1510, 0], [150, 880], "Block.png", false]
         ],
-        "scales":[],
-        "fish":[],
-        "starting_pos":[200,400],
+        "scales":[
+            [[375, 500]],
+            [[1290, 750]],
+            [[1700, 500]]
+        ],
+        "fish":[[[1653,50]]],
+        "starting_pos":[200,900],
         "level_background":"Background4.png",
         "addon":"default.png"
     },
