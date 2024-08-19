@@ -21,6 +21,8 @@ cat : Player = Player(level_gen.get(str(level), "starting_pos"),(100,100))
 blocks : list[Block] = level_gen.generate_object(str(level), Block, "blocks")
 fishes : list[Fish] = level_gen.generate_object(str(level), Fish, "fish")
 scales : list[Scale] = level_gen.generate_object(str(level), Scale, "scales")
+addon = fileLoader.loadImage(level_gen.get(str(level), "addon"))
+addonRect = addon.get_rect()
 running = True
 
 def loadNewLevel(level : str) -> pygame.image:
@@ -78,6 +80,8 @@ while running:
 
         for scale in scales:
             scale.draw(mainSurface)
+
+    mainSurface.blit(addon, addonRect)
 
     pygame.display.flip()
     clock.tick(60)

@@ -72,6 +72,15 @@ class Player():
 
     def update(self, keysDownIn: dict[str, bool], blocks: list[Block], scales: list[Scale], fishes: list[Fish]) -> None:
         # Scale logic
+
+        if self.pos[0] < 0 or self.pos[0] > 1920 or self.pos[1] < 0 or self.pos[1] > 1080:
+            print("DEATH - cat evaporated")
+            self.pos = [self.startingPos[0], self.startingPos[1]]
+            self.catSize = 100
+            self.death += 1
+            self.resetScales(scales)
+            self.resetFish(fishes)
+
         if (keysDownIn[self.keyBinds["scaleUp"]] or keysDownIn[self.keyBinds["scaleDown"]]) and self.showSlider == 0:
             self.showSlider = 1
             if keysDownIn[self.keyBinds["scaleUp"]]:
@@ -110,6 +119,7 @@ class Player():
                             self.pos[1] < blockData['y'] + blockData['h']):
                         print("DEATH - cat squashed")
                         self.pos = [self.startingPos[0], self.startingPos[1]]
+                        self.catSize = 100
                         self.death += 1
                         self.resetScales(scales)
 
@@ -175,6 +185,7 @@ class Player():
                     if onWall != 0:
                         print("DEATH - water")
                         self.pos = [self.startingPos[0], self.startingPos[1]]
+                        self.catSize = 100
                         self.death += 1                        
                         self.resetScales(scales)
 
@@ -202,6 +213,7 @@ class Player():
                     if onRoof or onGround:
                         print("DEATH - water")
                         self.pos = [self.startingPos[0], self.startingPos[1]]
+                        self.catSize = 100
                         self.death += 1
                         self.resetScales(scales)
 
