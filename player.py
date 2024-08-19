@@ -79,7 +79,6 @@ class Player():
             self.catSize = 100
             self.death += 1
             self.resetScales(scales)
-            self.resetFish(fishes)
 
         if (keysDownIn[self.keyBinds["scaleUp"]] or keysDownIn[self.keyBinds["scaleDown"]]) and self.showSlider == 0:
             self.showSlider = 1
