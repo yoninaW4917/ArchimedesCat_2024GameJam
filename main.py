@@ -14,10 +14,9 @@ pygame.display.set_caption("Fat Cat")
 
 clock = pygame.time.Clock()
 level_gen = LevelGenerator()
-level: int = 8
+level: int = 7
 cat : Player = Player(level_gen.get(str(level), "starting_pos"),(100,100))
 blocks : list[Block] = level_gen.generate_object(str(level), Block, "blocks")
-#scales : list[Scale] = [Scale((100, 100), (50, 50), fileLoader.loadImage("Scale.png"))]
 fishes : list[Fish] = level_gen.generate_object(str(level), Fish, "fish")
 scales : list[Scale] = level_gen.generate_object(str(level), Scale, "scales")
 running = True
@@ -40,7 +39,7 @@ while running:
 
     keyDown = pygame.key.get_pressed()
 
-    cat.update(keyDown, blocks, [], fishes)
+    cat.update(keyDown, blocks, scales, fishes)
 
     # ------- DRAWING ------- #
     mainSurface.fill((255, 255, 255))
