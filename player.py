@@ -76,6 +76,7 @@ class Player():
         # Initialize fish and scales variables
         self.fish_count = 0
         self.scale_count = 0
+        self.scale_count_level = 0
         # Initialize a font object
         self.font = fileLoader.loadFont(None, 36)
 
@@ -112,6 +113,13 @@ class Player():
             scale.reset()
             print("Scale reset")
 
+    #function to get and set scale_count_per_level to make sure you can only collect the scales once and if u die it subtracts
+    def get_scale_count_level(self) -> int:
+        return self.scale_count_level
+    def set_scale_count_level(self, value: int) -> None:
+        self.scale_count_level = value
+        print("Scale count level set to", value)
+
     def update(self, keysDownIn: dict[str, bool], blocks: list[Block], scales: list[Scale], fishes: list[Fish]) -> None:
         # Scale logic
 
@@ -121,6 +129,9 @@ class Player():
             self.catSize = 100
             self.death += 1
             self.resetScales(scales)
+            self.scale_count = self.scale_count - self.scale_count_level
+            self.scale_count_level = 0
+
 
         if (keysDownIn[self.keyBinds["scaleUp"]] or keysDownIn[self.keyBinds["scaleDown"]]) and self.showSlider == 0:
             self.showSlider = 1
@@ -168,6 +179,10 @@ class Player():
                         self.catSize = 100
                         self.death += 1
                         self.resetScales(scales)
+                        self.scale_count = self.scale_count - self.scale_count_level
+                        self.scale_count_level = 0
+
+
 
                 self.pos[0] += (self.catSize - newCatSize) / 4
                 self.pos[1] += (self.catSize - newCatSize) / 4
@@ -234,6 +249,9 @@ class Player():
                         self.catSize = 100
                         self.death += 1
                         self.resetScales(scales)
+                        self.scale_count = self.scale_count - self.scale_count_level
+                        self.scale_count_level = 0
+
 
         # Y-axis collision detection and handling
         self.pos[1] += svelo[1]
@@ -262,6 +280,10 @@ class Player():
                         self.catSize = 100
                         self.death += 1
                         self.resetScales(scales)
+                        self.scale_count = self.scale_count - self.scale_count_level
+                        self.scale_count_level = 0
+
+
 
                 self.velo[1] = 0  # Stop vertical movement
 
@@ -279,6 +301,7 @@ class Player():
                 # Collision detected, collect the scale
                 if not scale.collected:
                     self.scale_count += 1
+                    self.scale_count_level += 1
                     scale.collected = True
 
         if self.onGround:

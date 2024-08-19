@@ -8,6 +8,7 @@ from objects.poof import Poof
 from levelEditor.levelEditor import LevelGenerator
 import fileLoader
 
+
 pygame.display.init()
 pygame.font.init()
 
@@ -47,7 +48,7 @@ def loadNewLevel(level : str) -> pygame.image:
     return fileLoader.loadImage(level_gen.get(str(level), "level_background")).convert()
 
 background = loadNewLevel(level)
-
+scales_in_level = cat.get_scale_count_level()
 while running:
     # ------- EVENTS ------- #
 
@@ -69,7 +70,8 @@ while running:
     if cat.update(keyDown, blocks, scales, fishes):
         # Level complete
         level += 1
-
+        cat.set_scale_count_level(0)
+        print(cat.get_scale_count_level())
         background = loadNewLevel(str(level))
 
     # ------- DRAWING ------- #
