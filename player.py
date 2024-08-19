@@ -1,3 +1,4 @@
+from flask.cli import F
 import fileLoader
 import pygame
 from objects.block import Block
@@ -66,6 +67,8 @@ class Player():
         #Death counter
         self.death = 0
 
+        #Timer
+        self.timer = pygame.time.get_ticks()
     # Add these variables in your class initialization
     wallJumpCooldown = 0  # Cooldown counter
     wallJumpCooldownTime = 10  # Number of frames to wait before allowing direction changes after a wall jump
@@ -313,7 +316,14 @@ class Player():
                 elif self.pos[1] < blockData['y'] + blockData['h'] and self.pos[1] + newHeight > blockData['y'] + \
                         blockData['h']:
                     self.pos[1] = blockData['y'] + blockData['h']  # Move the player below the block
-
+    #Timer Functions
+    def minutes(self, milliseconds: int) -> int:
+        return milliseconds // 60000
+    def seconds(self, milliseconds: int) -> int:
+        return (milliseconds // 1000) % 60
+    def milliseconds(self, milliseconds: int) -> int:
+        return milliseconds % 1000
+        
     def draw(self, surfaceIn: pygame.Surface) -> None:
         # Draw the player
         cat_width = self.size[0] * self.catSize / 100
@@ -323,6 +333,8 @@ class Player():
         print(self.poof.size)
         self.poof.draw([self.pos[0], self.pos[1]], self.catSize, surfaceIn)
 
+        
+        
         # Draw the slider if needed
         if self.showSlider != 0:
             # Position the slider at the bottom right corner of the cat
@@ -338,3 +350,6 @@ class Player():
         surfaceIn.blit(scale_count_text, (100, 100))  # Position the text at the top-left corner of the screen
 #        fish_count_text = self.font.render(f'Fish: {self.fish_count}', True, (0, 0, 0))
 #       surfaceIn.blit(fish_count_text, (500, 100))  # Position the text at the top-left corner of the screen
+        timer_text = self.font.render(f'Time: {int(self.minutes(pygame.time.get_ticks() - self.timer)) }:{int(self.seconds(pygame.time.get_ticks() - self.timer)) }:{int(self.milliseconds(pygame.time.get_ticks() - self.timer)) }', True, (0, 0, 0))
+        surfaceIn.blit(timer_text, (900, 100))
+ 
