@@ -7,7 +7,6 @@ from objects.fish import Fish
 import math
 from objects.poof import Poof
 
-
 CAT_IMAGES = [
     (fileLoader.loadImage("skinnyCat.png"), (11, 70)),
     (fileLoader.loadImage("normalCat.png"), (71, 130)),
@@ -77,9 +76,8 @@ class Player():
         # Initialize fish and scales variables
         self.fish_count = 0
         self.scale_count = 0
-        self.scale_count_level = 0
         # Initialize a font object
-        self.font = fileLoader.loadFont('./stepalange-font/Stepalange-x3BLm.otf', 36)
+        self.font = fileLoader.loadFont(None, 36)
 
         # Poof
         self.poof = poof
@@ -102,6 +100,8 @@ class Player():
         #Death counter
         self.death = 0
 
+        self.current_image = None
+
         #Timer
         self.timer = pygame.time.get_ticks()
     # Add these variables in your class initialization
@@ -114,13 +114,6 @@ class Player():
             scale.reset()
             print("Scale reset")
 
-    #function to get and set scale_count_per_level to make sure you can only collect the scales once and if u die it subtracts
-    def get_scale_count_level(self) -> int:
-        return self.scale_count_level
-    def set_scale_count_level(self, value: int) -> None:
-        self.scale_count_level = value
-        print("Scale count level set to", value)
-
     def update(self, keysDownIn: dict[str, bool], blocks: list[Block], scales: list[Scale], fishes: list[Fish]) -> None:
         # Scale logic
 
@@ -130,9 +123,6 @@ class Player():
             self.catSize = 100
             self.death += 1
             self.resetScales(scales)
-            self.scale_count = self.scale_count - self.scale_count_level
-            self.scale_count_level = 0
-
 
         if (keysDownIn[self.keyBinds["scaleUp"]] or keysDownIn[self.keyBinds["scaleDown"]]) and self.showSlider == 0:
             self.showSlider = 1
@@ -180,10 +170,6 @@ class Player():
                         self.catSize = 100
                         self.death += 1
                         self.resetScales(scales)
-                        self.scale_count = self.scale_count - self.scale_count_level
-                        self.scale_count_level = 0
-
-
 
                 self.pos[0] += (self.catSize - newCatSize) / 4
                 self.pos[1] += (self.catSize - newCatSize) / 4
@@ -250,9 +236,6 @@ class Player():
                         self.catSize = 100
                         self.death += 1
                         self.resetScales(scales)
-                        self.scale_count = self.scale_count - self.scale_count_level
-                        self.scale_count_level = 0
-
 
         # Y-axis collision detection and handling
         self.pos[1] += svelo[1]
@@ -281,10 +264,6 @@ class Player():
                         self.catSize = 100
                         self.death += 1
                         self.resetScales(scales)
-                        self.scale_count = self.scale_count - self.scale_count_level
-                        self.scale_count_level = 0
-
-
 
                 self.velo[1] = 0  # Stop vertical movement
 
@@ -302,7 +281,6 @@ class Player():
                 # Collision detected, collect the scale
                 if not scale.collected:
                     self.scale_count += 1
-                    self.scale_count_level += 1
                     scale.collected = True
 
         if self.onGround:
@@ -320,19 +298,30 @@ class Player():
                         self.landing_frame += 1
                     elif self.landing_frame >= 8:
                         self.landing_frame = -1  # Reset after landing frames are done
-                if self.sizeState == "small":
+                elif self.sizeState == "small":
                     if self.landing_frame >= 7 and self.landing_frame < 10:
                         self.landing_frame += 1
                     elif self.landing_frame >= 10:
                         self.landing_frame = -1
+                elif self.sizeState == "large":
+                    if self.landing_frame >= 9 and self.landing_frame < 13:
+                        self.landing_frame += 1
+                    elif self.landing_frame > 13:
+                        self.landing_frame = -1
         else:
             if self.velo[1] < 0:
-                self.jump_frame = 3  # Play the 4th jump frame
+                if self.sizeState != "large":
+                    self.jump_frame = 3  # Play the 4th jump frame
+                else:
+                    self.jump_frame = 7
             elif self.velo[1] == 0 and not self.onGround:
                 if self.sizeState == "medium":
                     self.jump_frame = 4  # Play the 5th jump frame as long as velocity is decreasing
                 elif self.sizeState == "small":
                     self.jump_frame = 3
+                elif self.sizeState == "large":
+                    self.jump_frame = 7
+
             elif self.velo[1] >= 0:
                 if self.sizeState == "medium":
                     self.jump_frame = 5
@@ -344,6 +333,8 @@ class Player():
                     elif self.jump_timer == 2:
                         self.jump_frame = 6
                     self.jump_frame += 1
+                elif self.sizeState == "large":
+                    self.jump_frame = 8
 
 
         if self.sizeState == "medium":
@@ -354,6 +345,10 @@ class Player():
             if not self.onGround and self.jump_frame >= 6:
                 self.state = "landing"
                 self.landing_frame = 7
+        elif self.sizeState == "large":
+            if not self.onGround and self.jump_frame >= 8:
+                self.state = "landing"
+                self.landing_frame = 9
 
         # Wall jumping
         if onWall != 0:
@@ -454,81 +449,86 @@ class Player():
 
             if self.state == "jumping":
                 if self.jump_frame < 7:
-                    current_image = self.s_jump[self.jump_frame]
+                    self.current_image = self.s_jump[self.jump_frame]
+                else:
+                    self.current_image = self.s_jump[7 + (self.jump_timer // 5)]
                 scale = self.catSize / 168
                 dimensions = (scale * 168, scale * 144)
 
             elif self.state == "landing":
-                current_image = self.m_jump[self.landing_frame]
+                self.current_image = self.m_jump[self.landing_frame]
                 scale = self.catSize / 168
                 dimensions = (scale * 168, scale * 144)
 
             if self.state == "walking":
-                current_image = self.s_walk[self.frame]
+                self.current_image = self.s_walk[self.frame]
                 self.val += 1
-                self.frame = math.floor(self.val / 30) % 6 if self.frame < 6 else 0
+                self.frame = math.floor(self.val / 15) % 6 if self.frame < 6 else 0
                 scale = self.catSize / 234
                 dimensions = (scale * 234, scale * 160)
 
             if self.state == "idle":
-                self.frame = 0
-                current_image = self.s_idle[self.frame]
+                self.current_image = self.s_idle[0]
                 scale = self.catSize / 234
                 dimensions = (scale * 234, scale * 160)
 
         elif self.sizeState == "medium":
 
             if self.state == "jumping":
-                if self.jump_frame < 3:
-                    current_image = self.m_jump[self.jump_frame]
-                elif self.jump_frame == 3:
-                    current_image = self.m_jump[3]  # Play the 4th jump frame until vertical velocity reaches 0
-                elif self.jump_frame == 4:
-                    current_image = self.m_jump[4]  # Play the 5th jump frame as long as velocity is decreasing
+                if self.jump_frame < 5:
+                    self.current_image = self.m_jump[self.jump_frame]
                 else:
-                    current_image = self.m_jump[5 + (self.jump_timer // 5)]
+                    self.current_image = self.m_jump[5 + (self.jump_timer // 5)]
                 scale = self.catSize / 258
                 dimensions = (scale * 258, scale * 240)
 
             elif self.state == "landing":
-                current_image = self.m_jump[self.landing_frame]
+                self.current_image = self.m_jump[self.landing_frame]
                 scale = self.catSize / 258
                 dimensions = (scale * 258, scale * 240)
 
             if self.state == "walking":
-                current_image = self.m_walk[self.frame]
+                self.current_image = self.m_walk[self.frame]
                 self.val += 1
                 self.frame = math.floor(self.val / 15) % 6
                 scale = self.catSize / 234
                 dimensions = (scale * 234, scale * 160)
 
             if self.state == "idle":
-                self.frame = 0
-                current_image = self.m_idle[self.frame]
+                self.current_image = self.m_idle[0]
                 scale = self.catSize / 248
                 dimensions = (scale * 248, scale * 168)
 
         elif self.sizeState == "large":
 
             if self.state == "jumping":
-                print("hello world")
+                if self.jump_frame < 8:
+                    self.current_image = self.l_jump[self.jump_frame]
+                else:
+                    self.current_image = self.l_jump[8 + (self.jump_timer // 5)]
+                scale = self.catSize / 440
+                dimensions = (scale * 440, scale * 344)
+
+            elif self.state == "landing":
+                self.current_image = self.l_jump[self.landing_frame]
+                scale = self.catSize / 440
+                dimensions = (scale * 440, scale * 344)
 
             if self.state == "walking":
-                current_image = self.l_walk[self.frame]
+                self.current_image = self.l_walk[self.frame]
                 self.val += 1
-                self.frame = math.floor(self.val / 30) % 6
+                self.frame = math.floor(self.val / 15) % 7
                 scale = self.catSize / 448
                 dimensions = (scale * 448, scale * 328)
 
             if self.state == "idle":
-                current_image = self.l_idle[self.frame]
-                self.frame = 0
+                self.current_image = self.l_idle[0]
                 scale = self.catSize / 448
                 dimensions = (scale * 448, scale * 328)
 
-        current_image = pygame.transform.scale(current_image, dimensions)
-        current_image = pygame.transform.flip(current_image, (self.direction != 1), False)
-        surfaceIn.blit(current_image, [self.pos[0], self.pos[1]+50])
+        self.current_image = pygame.transform.scale(self.current_image, dimensions)
+        self.current_image = pygame.transform.flip(self.current_image, (self.direction != 1), False)
+        surfaceIn.blit(self.current_image, [self.pos[0], self.pos[1]])
 
         self.poof.draw([self.pos[0], self.pos[1]], self.catSize, surfaceIn)
 
@@ -544,13 +544,10 @@ class Player():
             pawPos = (sliderPos[0] + 25, sliderPos[1] + 60 - int(self.scaleTimer))
             surfaceIn.blit(CAT_PAW_IMAGE, pawPos)
 
-        #Counting the scales and fish
-        self.bg_rect = pygame.image.load("./assets/images/UI/bg_gradient_fog.png")
-        self.bg_rect = pygame.Surface.convert_alpha(self.bg_rect)
-        surfaceIn.blit(self.bg_rect, (0, 0))
-        scale_count_text = self.font.render(f'Scales: {self.scale_count}', True, (255, 255, 255))
+            #Counting the scales and fish
+        scale_count_text = self.font.render(f'Scales: {self.scale_count}', True, (0, 0, 0))
         surfaceIn.blit(scale_count_text, (100, 100))  # Position the text at the top-left corner of the screen
 #        fish_count_text = self.font.render(f'Fish: {self.fish_count}', True, (0, 0, 0))
 #       surfaceIn.blit(fish_count_text, (500, 100))  # Position the text at the top-left corner of the screen
-        timer_text = self.font.render(f'Time: {int(self.minutes(pygame.time.get_ticks() - self.timer)) }:{int(self.seconds(pygame.time.get_ticks() - self.timer)) }:{int(self.milliseconds(pygame.time.get_ticks() - self.timer)) }', True, (255, 255, 255))
-        surfaceIn.blit(timer_text, (1500, 100))
+        timer_text = self.font.render(f'Time: {int(self.minutes(pygame.time.get_ticks() - self.timer)) }:{int(self.seconds(pygame.time.get_ticks() - self.timer)) }:{int(self.milliseconds(pygame.time.get_ticks() - self.timer)) }', True, (0, 0, 0))
+        surfaceIn.blit(timer_text, (900, 100))
