@@ -115,6 +115,7 @@ class Player():
                             self.pos[1] < blockData['y'] + blockData['h']):
                         print("DEATH - cat squashed")
                         self.pos = [self.startingPos[0], self.startingPos[1]]
+                        self.catSize = 100
                         self.death += 1
                         self.resetScales(scales)
                         self.resetFish(fishes)
@@ -181,6 +182,7 @@ class Player():
                     if onWall != 0:
                         print("DEATH - water")
                         self.pos = [self.startingPos[0], self.startingPos[1]]
+                        self.catSize = 100
                         self.death += 1                        
                         self.resetScales(scales)
                         self.resetFish(fishes)
@@ -209,6 +211,7 @@ class Player():
                     if onRoof or onGround:
                         print("DEATH - water")
                         self.pos = [self.startingPos[0], self.startingPos[1]]
+                        self.catSize = 100
                         self.death += 1
                         self.resetScales(scales)
                         self.resetFish(fishes)
