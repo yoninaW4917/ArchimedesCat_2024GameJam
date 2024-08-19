@@ -14,6 +14,7 @@ CAT_PAW_IMAGE = pygame.transform.scale(fileLoader.loadImage("catPaw.png"), (15, 
 class Player():
     def __init__(self, startingPos : list[int, int] = (0, 0), sizeIn : list=(100, 100)) -> None:
         # POS IS THE BOTTOM LEFT CORNER!
+        self.startingPos = startingPos  # Store startingPos as an instance variable
         self.pos = [startingPos[0], startingPos[1]]
         self.velo = [0, 0]
 
@@ -52,6 +53,9 @@ class Player():
             "scaleDown": pygame.K_x,
             "scaleConfirm": pygame.K_SPACE,
         }
+
+        #Death counter
+        self.death = 0
 
     # Add these variables in your class initialization
     wallJumpCooldown = 0  # Cooldown counter
@@ -96,6 +100,9 @@ class Player():
                             self.pos[1] + height > blockData['y'] and
                             self.pos[1] < blockData['y'] + blockData['h']):
                         print("DEATH - cat squashed")
+                        self.pos = [self.startingPos[0], self.startingPos[1]]
+                        self.death_count += 1
+                        
 
                 self.pos[0] += (self.catSize - newCatSize) / 4
                 self.pos[1] += (self.catSize - newCatSize) / 4
@@ -158,6 +165,8 @@ class Player():
                 if blockData["water"] == True:
                     if onWall != 0:
                         print("DEATH - water")
+                        self.pos = [self.startingPos[0], self.startingPos[1]]
+                        self.death_count += 1
 
         # Y-axis collision detection and handling
         self.pos[1] += svelo[1]
@@ -182,6 +191,8 @@ class Player():
                 if blockData["water"] == True:
                     if onRoof or onGround:
                         print("DEATH - water")
+                        self.pos = [self.startingPos[0], self.startingPos[1]]
+                        self.death_count += 1
 
                 self.velo[1] = 0  # Stop vertical movement
 
