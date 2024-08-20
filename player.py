@@ -390,7 +390,7 @@ class Player():
         if not self.onGround:
             self.state = "jumping"
         else:
-            if self.velo[0] != 0:
+            if abs(self.velo[0]) >= 0.1:
                 self.state = "walking"
             else:
                 self.state = "idle"
