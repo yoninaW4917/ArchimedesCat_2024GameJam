@@ -477,9 +477,9 @@ class Player():
                 dimensions = (scale * 168, scale * 144)
 
             if self.state == "walking":
-                self.current_image = self.s_walk[self.frame]
                 self.val += 1
                 self.frame = math.floor(self.val / 15) % 6 if self.frame < 6 else 0
+                self.current_image = self.s_walk[self.frame]
                 scale = self.catSize / 234
                 dimensions = (scale * 234, scale * 160)
 
@@ -504,9 +504,9 @@ class Player():
                 dimensions = (scale * 258, scale * 240)
 
             if self.state == "walking":
-                self.current_image = self.m_walk[self.frame]
                 self.val += 1
                 self.frame = math.floor(self.val / 15) % 6
+                self.current_image = self.m_walk[self.frame]
                 scale = self.catSize / 234
                 dimensions = (scale * 234, scale * 160)
 
@@ -531,9 +531,9 @@ class Player():
                 dimensions = (scale * 440, scale * 344)
 
             if self.state == "walking":
-                self.current_image = self.l_walk[self.frame]
                 self.val += 1
                 self.frame = math.floor(self.val / 15) % 7
+                self.current_image = self.l_walk[self.frame]
                 scale = self.catSize / 448
                 dimensions = (scale * 448, scale * 328)
 
