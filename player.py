@@ -22,6 +22,7 @@ class Player():
         self.pos = [startingPos[0], startingPos[1]]
         self.velo = [0, 0]
 
+        self.bg_rect = pygame.image.load("./assets/images/UI/bg_gradient_fog.png").convert_alpha()
 
         # Sets shown velocity
         self.svelo = [0, 0]
@@ -197,7 +198,11 @@ class Player():
         if self.wallJumpCooldown > 0:
             self.wallJumpCooldown -= 1  # Decrement cooldown counter
         else:
-            self.velo[0] = (keysDownIn[self.keyBinds["right"]] - keysDownIn[self.keyBinds["left"]]) * 5
+            self.velo[0] += (keysDownIn[self.keyBinds["right"]] - keysDownIn[self.keyBinds["left"]])
+
+            self.velo[0] = utils.clamp(self.velo[0], -1000 / self.catSize, 1000 / self.catSize)
+
+            self.velo[0] *= 0.88
 
         # Apply gravity
         gravity_effect = 0.4 * 75 / self.catSize
@@ -542,7 +547,7 @@ class Player():
                 dimensions = (scale * 448, scale * 328)
 
         self.current_image = pygame.transform.scale(self.current_image, dimensions)
-        self.current_image = pygame.transform.flip(self.current_image, (self.direction != 1), False)
+        self.current_image = pygame.transform.flip(self.current_image, (self.direction != 1), False).convert()
         #surfaceIn.blit(pygame.transform.scale(self.image, (cat_width, cat_height)), self.pos)
         surfaceIn.blit(self.current_image, [self.pos[0], self.pos[1]])
         self.poof.draw([self.pos[0], self.pos[1]], self.catSize, surfaceIn)
@@ -558,9 +563,8 @@ class Player():
             surfaceIn.blit(CAT_PAW_IMAGE, pawPos)
 
             #Counting the scales and fish
-        self.bg_rect = pygame.image.load("./assets/images/UI/bg_gradient_fog.png")
-        self.bg_rect = pygame.Surface.convert_alpha(self.bg_rect)
         surfaceIn.blit(self.bg_rect, (0, 0))
+
         scale_count_text = self.font.render(f'Scales: {self.scale_count}', True, (255, 255, 255))
         surfaceIn.blit(scale_count_text, (100, 100))  # Position the text at the top-left corner of the screen
 #        fish_count_text = self.font.render(f'Fish: {self.fish_count}', True, (0, 0, 0))
