@@ -52,7 +52,7 @@ def loadCutscenes(scene_no: str):
     mainSurface.blit(fileLoader.loadImage(f'Cutscenes/{scene_no}.png').convert(), (210, 40))
     pygame.display.flip()
     pygame.time.wait(5000)
-    cat.timer = pygame.time.get_ticks()
+    cat.timer = cat.timer + 5000
 
 def loadNewLevel(level : str) -> pygame.Surface:
     global blocks, fishes, scales, addon, addonRect
@@ -109,7 +109,7 @@ while running:
             if ev.button == 1:
                 if gameState == "menu":
                     if buttons["START"].withinBounds(pygame.mouse.get_pos()):
-                        for scene_no in range(1,4): loadCutscenes(scene_no)
+                        for scene_no in range(1,3): loadCutscenes(scene_no)
                         gameState = "game"
 
                 elif gameState == "pause":
@@ -125,6 +125,8 @@ while running:
             # Level complete
             level += 1
             cat.set_scale_count_level(0)
+            if level == 5:
+                loadCutscenes(3)
             if level >10:
                 gameState = "end"
                 level = 1
