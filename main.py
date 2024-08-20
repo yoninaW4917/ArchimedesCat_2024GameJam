@@ -67,6 +67,7 @@ def loadNewLevel(level : str) -> pygame.Surface:
         pygame.mixer.stop()
 
         music["HAPPY"].play(-1)
+
     elif int(level) == 5:
         # Sad
         pygame.mixer.stop()
@@ -131,7 +132,6 @@ while running:
                             music["HAPPY"].set_volume(music["HAPPY"].get_volume() - 0.25)
                             music["SAD"].set_volume(music["SAD"].get_volume() - 0.25)
                     drawVolume()
-        print(music["HAPPY"].get_volume())
                     
         def drawVolume():
             if music["HAPPY"].get_volume() == 0:
