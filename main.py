@@ -13,6 +13,8 @@ import utils
 from utils import Button
 import time
 
+
+pygame.mixer.init()
 pygame.display.init()
 pygame.font.init()
 
@@ -32,6 +34,11 @@ scales : list[Scale] = level_gen.generate_object(str(level), Scale, "scales")
 buttons : dict[str, Button] = {
     "START" : Button((820, 750), (250, 100), fileLoader.loadImage("UI/PLAY BUTTON.png")),
     "RESUME" : Button((820, 500), (250, 100), fileLoader.loadImage("UI/RESUME BUTTON.png"))
+}
+
+music : dict[str, pygame.mixer.Sound] = {
+    "HAPPY" : fileLoader.loadSound("music/Happy cat.mp3"),
+    "SAD" : fileLoader.loadSound("music/Sad cat.mp3")
 }
 
 gameState = "menu"
@@ -54,6 +61,17 @@ def loadNewLevel(level : str) -> pygame.Surface:
     cat.startingPos = cat.pos.copy()
     cat.catSize = 100
 
+    if int(level) == 1:
+        # Happy
+        pygame.mixer.stop()
+
+        music["HAPPY"].play(-1)
+    elif int(level) == 5:
+        # Sad
+        pygame.mixer.stop()
+
+        music["SAD"].play(-1)
+
     if level in ("6", "7"):
         addon = fileLoader.loadImage(level_gen.get(str(level), "addon")).convert_alpha()
         addonRect = addon.get_rect()
@@ -65,6 +83,8 @@ def loadNewLevel(level : str) -> pygame.Surface:
     return fileLoader.loadImage(level_gen.get(str(level), "level_background")).convert()
 
 background = loadNewLevel(level)
+menu_background = fileLoader.loadImage("./UI/MENU_BG.png")
+resume_background = fileLoader.loadImage("./UI/bg_gradient.png")
 scales_in_level = cat.get_scale_count_level()
 while running:
     # ------- EVENTS ------- #
@@ -82,7 +102,7 @@ while running:
                     break
                 
                 gameState = "pause"
-
+                mainSurface.blit(resume_background, (0, 0))
                 buttons["RESUME"].draw(mainSurface)
 
         elif ev.type == pygame.MOUSEBUTTONDOWN:
@@ -149,4 +169,3 @@ while running:
 
     pygame.display.flip()
     clock.tick(60)
-    print(cat.pos)
