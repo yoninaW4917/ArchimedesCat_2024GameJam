@@ -158,7 +158,6 @@ class Player():
 
                 self.poof.isDrawing = True
 
-
                 # Apply the size change without affecting velocity
                 newCatSize = 100 + self.scaleTimer / 60 * 100
 
@@ -544,8 +543,8 @@ class Player():
 
         self.current_image = pygame.transform.scale(self.current_image, dimensions)
         self.current_image = pygame.transform.flip(self.current_image, (self.direction != 1), False)
+        #surfaceIn.blit(pygame.transform.scale(self.image, (cat_width, cat_height)), self.pos)
         surfaceIn.blit(self.current_image, [self.pos[0], self.pos[1]])
-
         self.poof.draw([self.pos[0], self.pos[1]], self.catSize, surfaceIn)
 
         # Draw the slider if needed
