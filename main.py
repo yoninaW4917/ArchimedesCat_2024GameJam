@@ -1,5 +1,6 @@
 from ast import main
 import glob
+from flask import g
 import pygame
 from player import Player
 from objects.block import Block
@@ -10,7 +11,7 @@ from levelEditor.levelEditor import LevelGenerator
 import fileLoader
 import utils
 from utils import Button
-
+import time
 
 pygame.display.init()
 pygame.font.init()
@@ -21,7 +22,7 @@ pygame.display.set_caption("Fat Cat")
 
 clock = pygame.time.Clock()
 level_gen = LevelGenerator()
-level: int = 1
+level: int = 10
 poof = Poof()
 cat : Player = Player(level_gen.get(str(level), "starting_pos"),(100,67), poof)
 blocks : list[Block] = level_gen.generate_object(str(level), Block, "blocks")
@@ -37,9 +38,14 @@ gameState = "menu"
 
 running = True
 
-if level in (6, 7):
-    addon = fileLoader.loadImage(level_gen.get(str(level), "addon")).convert_alpha()
-    addonRect = addon.get_rect()
+# if level in (6, 7):
+#     addon = fileLoader.loadImage(level_gen.get(str(level), "addon")).convert_alpha()
+#     addonRect = addon.get_rect()
+def loadCutscenes(scene_no: str):
+    pygame.draw.rect(mainSurface, (0, 0, 0), (0, 0, 1920, 1080))
+    mainSurface.blit(fileLoader.loadImage(f'Cutscenes/{scene_no}.png').convert(), (210, 40))
+    pygame.display.flip()
+    time.sleep(5)
 
 def loadNewLevel(level : str) -> pygame.Surface:
     global blocks, fishes, scales, addon, addonRect
@@ -83,6 +89,7 @@ while running:
             if ev.button == 1:
                 if gameState == "menu":
                     if buttons["START"].withinBounds(pygame.mouse.get_pos()):
+                        for scene_no in range(1,4): loadCutscenes(scene_no)
                         gameState = "game"
 
                 elif gameState == "pause":
@@ -99,9 +106,8 @@ while running:
             level += 1
             cat.set_scale_count_level(0)
             if level >10:
-                gameState="menu"
-                # cutscenes here
-                continue
+                gameState = "end"
+                level = 1
             background = loadNewLevel(str(level))
     elif gameState == "menu":
         pass
@@ -132,9 +138,14 @@ while running:
             mainSurface.blit(addon, addonRect)
 
     elif gameState == "menu":
-        mainSurface.blit(background, (0, 0))
+        mainSurface.blit(fileLoader.loadImage('UI/Start.png'), (0, 0))
 
         buttons["START"].draw(mainSurface)
+
+    elif gameState == 'end':
+        # cutscenes here
+        for scene_no in range(4,7): loadCutscenes(scene_no)
+        gameState = 'menu'
 
     pygame.display.flip()
     clock.tick(60)
