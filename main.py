@@ -73,6 +73,8 @@ def loadNewLevel(level : str) -> pygame.Surface:
 
         music["SAD"].play(-1)
 
+        loadCutscenes(3)
+
     if level in ("6", "7"):
         addon = fileLoader.loadImage(level_gen.get(str(level), "addon")).convert_alpha()
         addonRect = addon.get_rect()
@@ -153,8 +155,6 @@ while running:
             # Level complete
             level += 1
             cat.set_scale_count_level(0)
-            if level == 5:
-                loadCutscenes(3)
             if level >10:
                 gameState = "end"
                 level = 1
