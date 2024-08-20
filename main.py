@@ -21,7 +21,7 @@ pygame.display.set_caption("Fat Cat")
 
 clock = pygame.time.Clock()
 level_gen = LevelGenerator()
-level: int = 5
+level: int = 1
 poof = Poof()
 cat : Player = Player(level_gen.get(str(level), "starting_pos"),(100,67), poof)
 blocks : list[Block] = level_gen.generate_object(str(level), Block, "blocks")
@@ -113,8 +113,8 @@ while running:
                 fish.draw(mainSurface)
 
         cat.draw(mainSurface)
-        for block in blocks:
-            block.draw(mainSurface)
+#        for block in blocks:
+#            block.draw(mainSurface)
         if (level != 10):
             for fish in fishes:
                 fish.draw(mainSurface)
