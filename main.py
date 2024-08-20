@@ -98,6 +98,10 @@ while running:
             # Level complete
             level += 1
             cat.set_scale_count_level(0)
+            if level >10:
+                gameState="menu"
+                # cutscenes here
+                continue
             background = loadNewLevel(str(level))
     elif gameState == "menu":
         pass
