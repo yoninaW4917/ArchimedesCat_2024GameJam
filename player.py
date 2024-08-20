@@ -531,7 +531,7 @@ class Player():
 
             if self.state == "walking":
                 self.val += 1
-                self.frame = math.floor(self.val / 15) % 7
+                self.frame = math.floor(self.val / 8) % 7
                 self.current_image = self.l_walk[self.frame]
                 scale = self.catSize / 448
                 dimensions = (scale * 448, scale * 328)
