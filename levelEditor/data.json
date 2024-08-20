@@ -87,8 +87,12 @@
             [[810, 700], [300, 80], "Block.png", false],
             [[1490, 700], [350, 80], "Block.png", false]
         ],
-        "scales":[],
-        "fish":[],
+        "scales":[
+            [[580,270]], 
+            [[920, 160]],
+            [[1227,200]]
+        ],
+        "fish":[[[1700,600]]],
         "starting_pos":[120,600],
         "level_background":"bg/Background5.png"
     },
@@ -234,7 +238,7 @@
         [[80, 140], [100, 550], "Block.png", false]
         ],
         "scales":[],
-        "fish":[],
+        "fish":[[[1481,621]]],
         "starting_pos":[485,900],
         "level_background":"bg/Background10.png"
     }
