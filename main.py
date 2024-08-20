@@ -1,6 +1,5 @@
 from ast import main
 import glob
-from flask import g
 import pygame
 from player import Player
 from objects.block import Block
@@ -61,7 +60,7 @@ def loadNewLevel(level : str) -> pygame.Surface:
     cat.startingPos = cat.pos.copy()
     cat.catSize = 100
 
-    if int(level) == 1:
+    if int(level) == 1 and gameState != "end":
         # Happy
         pygame.mixer.stop()
 
