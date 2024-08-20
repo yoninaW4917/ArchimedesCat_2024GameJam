@@ -234,8 +234,8 @@
         [[1920, 0], [80, 1080], "Block.png", false],
         [[80,900], [300, 100], "Block.png", false],
         [[700, 700], [1300, 500], "Block.png", false],
-        [[80, 650], [300, 50], "Block.png", false],
-        [[80, 140], [100, 550], "Block.png", false]
+        [[80, 650], [300, 75], "Block.png", false],
+        [[-20, 0], [200, 690], "Block.png", false]
         ],
         "scales":[],
         "fish":[[[1481,621]]],
