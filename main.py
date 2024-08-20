@@ -10,6 +10,7 @@ from levelEditor.levelEditor import LevelGenerator
 import fileLoader
 import utils
 from utils import Button
+from timer import Timer
 
 
 pygame.mixer.init()
@@ -22,12 +23,15 @@ pygame.display.set_caption("Fat Cat")
 
 clock = pygame.time.Clock()
 level_gen = LevelGenerator()
-level: int = 1
+level: int = 10
 poof = Poof()
 cat : Player = Player(level_gen.get(str(level), "starting_pos"),(100,67), poof)
 blocks : list[Block] = level_gen.generate_object(str(level), Block, "blocks")
 fishes : list[Fish] = level_gen.generate_object(str(level), Fish, "fish")
 scales : list[Scale] = level_gen.generate_object(str(level), Scale, "scales")
+timer = Timer()
+highscore = 0
+font = fileLoader.loadFont('./stepalange-font/Stepalange-x3BLm.otf',36)
 
 buttons : dict[str, Button] = {
     "START" : Button((820, 750), (250, 100), fileLoader.loadImage("UI/PLAY BUTTON.png")),
@@ -73,8 +77,9 @@ def loadNewLevel(level : str) -> pygame.Surface:
         pygame.mixer.stop()
 
         music["SAD"].play(-1)
-
+        timer.stop()
         loadCutscenes(3)
+        timer.play()
 
     if level in ("6", "7"):
         addon = fileLoader.loadImage(level_gen.get(str(level), "addon")).convert_alpha()
@@ -104,12 +109,13 @@ while running:
                     running = False
                     break
                 gameState = "pause"
+                timer.stop()
+               
                 buttons["VOLUME_UP"].draw(mainSurface)
                 buttons["VOLUME_DOWN"].draw(mainSurface)
                 mainSurface.blit(resume_background, (0, 0))
                 drawVolume()
                 buttons["RESUME"].draw(mainSurface)
-    
                 
                 
 
@@ -119,10 +125,11 @@ while running:
                     if buttons["START"].withinBounds(pygame.mouse.get_pos()):
                         for scene_no in range(1,3): loadCutscenes(scene_no)
                         gameState = "game"
-
+                        timer.start()
                 elif gameState == "pause":
                     if buttons["RESUME"].withinBounds(pygame.mouse.get_pos()):
                         gameState = "game"
+                        timer.play()
                     if buttons["VOLUME_UP"].withinBounds(pygame.mouse.get_pos()):
                         if music["HAPPY"].get_volume() < 1:
                             music["HAPPY"].set_volume(music["HAPPY"].get_volume() + 0.25)
@@ -184,6 +191,10 @@ while running:
 
         if (level in (6, 7)):
             mainSurface.blit(addon, addonRect)
+        timer_text = font.render(timer.get_formatted_time(), True, (255, 255, 255))
+        mainSurface.blit(timer_text, (1500, 100))
+        highscore_text = font.render(f'Highscore: {highscore}', True, (255, 255, 255))
+        mainSurface.blit(highscore_text, (1500, 150))
 
     elif gameState == "menu":
         mainSurface.blit(fileLoader.loadImage('UI/Start.png'), (0, 0))
@@ -192,6 +203,13 @@ while running:
 
     elif gameState == 'end':
         # cutscenes here
+        timer.stop()
+        if highscore < timer.get_time():
+            highscore = timer.get_time()
+        if highscore == 0:
+            highscore = timer.get_time()
+        print(highscore)
+        timer.reset()
         for scene_no in range(4,7): loadCutscenes(scene_no)
         gameState = 'menu'
 

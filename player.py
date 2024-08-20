@@ -106,7 +106,10 @@ class Player():
         self.current_image = None
 
         #Timer
+        
         self.timer = pygame.time.get_ticks()
+        self.high_score = 0
+
     # Add these variables in your class initialization
     wallJumpCooldown = 0  # Cooldown counter
     wallJumpCooldownTime = 10  # Number of frames to wait before allowing direction changes after a wall jump
@@ -569,5 +572,6 @@ class Player():
         surfaceIn.blit(scale_count_text, (100, 100))  # Position the text at the top-left corner of the screen
 #        fish_count_text = self.font.render(f'Fish: {self.fish_count}', True, (0, 0, 0))
 #       surfaceIn.blit(fish_count_text, (500, 100))  # Position the text at the top-left corner of the screen
-        timer_text = self.font.render(f'Time: {int(self.minutes(pygame.time.get_ticks() - self.timer)) }:{int(self.seconds(pygame.time.get_ticks() - self.timer)) }:{int(self.milliseconds(pygame.time.get_ticks() - self.timer)) }', True, (255, 255, 255))
-        surfaceIn.blit(timer_text, (1500, 100))
+
+    #    high_score_text = self.font.render(f'High Score: {int(self.minutes(self.high_score)) }:{int(self.seconds(self.high_score)) }:{int(self.milliseconds(self.high_score)) }', True, (255, 255, 255))
+    #    surfaceIn.blit(high_score_text, (1500, 200))
