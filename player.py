@@ -202,7 +202,7 @@ class Player():
         # Apply gravity
         gravity_effect = 0.4 * 75 / self.catSize
         if self.slowTime:
-            gravity_effect *= 0.01  # Apply slowdown to gravity effect
+            gravity_effect *= 0.1  # Apply slowdown to gravity effect
 
         self.velo[1] += gravity_effect
 
