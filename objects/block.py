@@ -1,7 +1,7 @@
 import pygame
 
 class Block():
-    def __init__(self, posIn : list[int, int], sizeIn : list[int, int], imageIn : pygame.image, water = False) -> None:
+    def __init__(self, posIn : list[int, int], sizeIn : list[int, int], imageIn : pygame.Surface, water = False) -> None:
         self.pos = posIn
 
         self.size = sizeIn
