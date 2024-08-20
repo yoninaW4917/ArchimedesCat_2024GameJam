@@ -24,7 +24,7 @@ pygame.display.set_caption("Fat Cat")
 
 clock = pygame.time.Clock()
 level_gen = LevelGenerator()
-level: int = 10
+level: int = 1
 poof = Poof()
 cat : Player = Player(level_gen.get(str(level), "starting_pos"),(100,67), poof)
 blocks : list[Block] = level_gen.generate_object(str(level), Block, "blocks")
