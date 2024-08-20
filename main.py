@@ -212,6 +212,7 @@ while running:
         print(highscore)
         timer.reset()
         for scene_no in range(4,7): loadCutscenes(scene_no)
+        cat.scale_count = 0
         gameState = 'menu'
 
     pygame.display.flip()
