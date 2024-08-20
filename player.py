@@ -22,7 +22,6 @@ class Player():
         self.pos = [startingPos[0], startingPos[1]]
         self.velo = [0, 0]
 
-        self.get_scale_count_level = 0
 
         # Sets shown velocity
         self.svelo = [0, 0]
@@ -399,7 +398,7 @@ class Player():
 
         if self.catSize < 72:
             self.sizeState = "small"
-        elif self.catSize < 160:
+        elif self.catSize < 140:
             self.sizeState = "medium"
         else:
             self.sizeState = "large"
