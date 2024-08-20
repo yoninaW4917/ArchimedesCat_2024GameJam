@@ -32,8 +32,8 @@ scales : list[Scale] = level_gen.generate_object(str(level), Scale, "scales")
 buttons : dict[str, Button] = {
     "START" : Button((820, 750), (250, 100), fileLoader.loadImage("UI/PLAY BUTTON.png")),
     "RESUME" : Button((820, 500), (250, 100), fileLoader.loadImage("UI/RESUME BUTTON.png")),
-    "VOLUME_UP" : Button((100,100), (260,171), fileLoader.loadImage("UI/ARROWS_volume_up.png")),
-    "VOLUME_DOWN" : Button((100, 150), (260, 171), fileLoader.loadImage("UI/ARROWS_volume_down.png"))
+    "VOLUME_UP" : Button((85,20), (100,100), fileLoader.loadImage("UI/volume_up.png")),
+    "VOLUME_DOWN" : Button((87, 320), (100, 100), fileLoader.loadImage("UI/volume_down.png"))
 }
 
 music : dict[str, pygame.mixer.Sound] = {
@@ -103,10 +103,10 @@ while running:
                     running = False
                     break
                 gameState = "pause"
-                mainSurface.blit(resume_background, (0, 0))
-                drawVolume()
                 buttons["VOLUME_UP"].draw(mainSurface)
                 buttons["VOLUME_DOWN"].draw(mainSurface)
+                mainSurface.blit(resume_background, (0, 0))
+                drawVolume()
                 buttons["RESUME"].draw(mainSurface)
     
                 
