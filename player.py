@@ -79,7 +79,7 @@ class Player():
         self.scale_count = 0
         self.scale_count_level = 0
         # Initialize a font object
-        self.font = fileLoader.loadFont(None, 36)
+        self.font = fileLoader.loadFont('./stepalange-font/Stepalange-x3BLm.otf',36)
 
         # Poof
         self.poof = poof
@@ -559,9 +559,12 @@ class Player():
             surfaceIn.blit(CAT_PAW_IMAGE, pawPos)
 
             #Counting the scales and fish
-        scale_count_text = self.font.render(f'Scales: {self.scale_count}', True, (0, 0, 0))
+        self.bg_rect = pygame.image.load("./assets/images/UI/bg_gradient.png")
+        self.bg_rect = pygame.Surface.convert_alpha(self.bg_rect)
+        surfaceIn.blit(self.bg_rect, (0, 0))
+        scale_count_text = self.font.render(f'Scales: {self.scale_count}', True, (255, 255, 255))
         surfaceIn.blit(scale_count_text, (100, 100))  # Position the text at the top-left corner of the screen
 #        fish_count_text = self.font.render(f'Fish: {self.fish_count}', True, (0, 0, 0))
 #       surfaceIn.blit(fish_count_text, (500, 100))  # Position the text at the top-left corner of the screen
-        timer_text = self.font.render(f'Time: {int(self.minutes(pygame.time.get_ticks() - self.timer)) }:{int(self.seconds(pygame.time.get_ticks() - self.timer)) }:{int(self.milliseconds(pygame.time.get_ticks() - self.timer)) }', True, (0, 0, 0))
-        surfaceIn.blit(timer_text, (900, 100))
+        timer_text = self.font.render(f'Time: {int(self.minutes(pygame.time.get_ticks() - self.timer)) }:{int(self.seconds(pygame.time.get_ticks() - self.timer)) }:{int(self.milliseconds(pygame.time.get_ticks() - self.timer)) }', True, (255, 255, 255))
+        surfaceIn.blit(timer_text, (1500, 100))
