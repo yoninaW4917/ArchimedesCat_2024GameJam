@@ -7,6 +7,7 @@ from objects.scale import Scale
 from objects.poof import Poof
 from levelEditor.levelEditor import LevelGenerator
 import fileLoader
+import utils
 
 
 pygame.display.init()
@@ -18,7 +19,7 @@ pygame.display.set_caption("Fat Cat")
 
 clock = pygame.time.Clock()
 level_gen = LevelGenerator()
-level: int = 1
+level: int = 10
 poof = Poof()
 cat : Player = Player(level_gen.get(str(level), "starting_pos"),(100,100), poof)
 blocks : list[Block] = level_gen.generate_object(str(level), Block, "blocks")
@@ -48,7 +49,7 @@ def loadNewLevel(level : str) -> pygame.image:
     return fileLoader.loadImage(level_gen.get(str(level), "level_background")).convert()
 
 background = loadNewLevel(level)
-scales_in_level = cat.get_scale_count_level()
+scales_in_level = cat.get_scale_count_level
 while running:
     # ------- EVENTS ------- #
 
@@ -71,7 +72,6 @@ while running:
         # Level complete
         level += 1
         cat.set_scale_count_level(0)
-        print(cat.get_scale_count_level())
         background = loadNewLevel(str(level))
 
     # ------- DRAWING ------- #
@@ -90,6 +90,9 @@ while running:
 
         for scale in scales:
             scale.draw(mainSurface)
+
+    else:
+        utils.drawcat(mainSurface)
 
     if (level in (6, 7)):
         mainSurface.blit(addon, addonRect)
