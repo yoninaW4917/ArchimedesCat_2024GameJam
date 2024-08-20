@@ -192,9 +192,9 @@ while running:
 
         if (level in (6, 7)):
             mainSurface.blit(addon, addonRect)
-        timer_text = font.render(timer.get_formatted_time(), True, (255, 255, 255))
+        timer_text = font.render(f'Timer: {timer.get_formatted_time(timer.get_time())}', True, (255, 255, 255))
         mainSurface.blit(timer_text, (1500, 100))
-        highscore_text = font.render(f'Highscore: {highscore}', True, (255, 255, 255))
+        highscore_text = font.render(f'Personal Best: {timer.get_formatted_time(highscore)}', True, (255, 255, 255))
         mainSurface.blit(highscore_text, (1500, 150))
 
     elif gameState == "menu":

@@ -36,9 +36,9 @@ class Timer:
         else:
             return self.elapsed_time
 
-    def get_formatted_time(self):
-        total_milliseconds = self.get_time()
+    def get_formatted_time(self, total_milliseconds):
+        total_milliseconds = total_milliseconds
         minutes = total_milliseconds // 60000
         seconds = (total_milliseconds % 60000) // 1000
         milliseconds = total_milliseconds % 1000
-        return f'Time: {minutes:02}:{seconds:02}:{milliseconds:03}'
+        return f' {minutes:02}:{seconds:02}:{milliseconds:03}'
