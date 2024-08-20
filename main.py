@@ -31,7 +31,9 @@ scales : list[Scale] = level_gen.generate_object(str(level), Scale, "scales")
 
 buttons : dict[str, Button] = {
     "START" : Button((820, 750), (250, 100), fileLoader.loadImage("UI/PLAY BUTTON.png")),
-    "RESUME" : Button((820, 500), (250, 100), fileLoader.loadImage("UI/RESUME BUTTON.png"))
+    "RESUME" : Button((820, 500), (250, 100), fileLoader.loadImage("UI/RESUME BUTTON.png")),
+    "VOLUME_UP" : Button((100,100), (260,171), fileLoader.loadImage("UI/ARROWS_volume_up.png")),
+    "VOLUME_DOWN" : Button((100, 150), (260, 171), fileLoader.loadImage("UI/ARROWS_volume_down.png"))
 }
 
 music : dict[str, pygame.mixer.Sound] = {
@@ -80,7 +82,6 @@ def loadNewLevel(level : str) -> pygame.Surface:
     scales = level_gen.generate_object(str(level), Scale, "scales")
 
     return fileLoader.loadImage(level_gen.get(str(level), "level_background")).convert()
-
 background = loadNewLevel(level)
 menu_background = fileLoader.loadImage("./UI/MENU_BG.png")
 resume_background = fileLoader.loadImage("./UI/bg_gradient.png")
@@ -99,10 +100,15 @@ while running:
                 if gameState != "game":
                     running = False
                     break
-                
                 gameState = "pause"
                 mainSurface.blit(resume_background, (0, 0))
+                drawVolume()
+                buttons["VOLUME_UP"].draw(mainSurface)
+                buttons["VOLUME_DOWN"].draw(mainSurface)
                 buttons["RESUME"].draw(mainSurface)
+    
+                
+                
 
         elif ev.type == pygame.MOUSEBUTTONDOWN:
             if ev.button == 1:
@@ -114,6 +120,29 @@ while running:
                 elif gameState == "pause":
                     if buttons["RESUME"].withinBounds(pygame.mouse.get_pos()):
                         gameState = "game"
+                    if buttons["VOLUME_UP"].withinBounds(pygame.mouse.get_pos()):
+                        if music["HAPPY"].get_volume() < 1:
+                            music["HAPPY"].set_volume(music["HAPPY"].get_volume() + 0.25)
+                            music["SAD"].set_volume(music["SAD"].get_volume() + 0.25)
+                    elif buttons["VOLUME_DOWN"].withinBounds(pygame.mouse.get_pos()):
+                        if music["HAPPY"].get_volume() > 0:
+                            music["HAPPY"].set_volume(music["HAPPY"].get_volume() - 0.25)
+                            music["SAD"].set_volume(music["SAD"].get_volume() - 0.25)
+                    drawVolume()
+        print(music["HAPPY"].get_volume())
+                    
+        def drawVolume():
+            if music["HAPPY"].get_volume() == 0:
+                mainSurface.blit(fileLoader.loadImage("./UI/volume_0.png"), (100, 100))
+            elif music["HAPPY"].get_volume() == 0.25:
+                mainSurface.blit(fileLoader.loadImage("./UI/volume_25.png"), (100,100))
+            elif music["HAPPY"].get_volume() == 0.5:
+                mainSurface.blit(fileLoader.loadImage("./UI/volume_50.png"), (100,100))
+            elif music["HAPPY"].get_volume() == 0.75:
+                mainSurface.blit(fileLoader.loadImage("./UI/volume_75.png"), (100,100))
+            elif music["HAPPY"].get_volume() == 1:
+                mainSurface.blit(fileLoader.loadImage("./UI/volume_100.png"), (100,100))
+
 
     # ------- UPDATES ------- #
 
