@@ -24,7 +24,7 @@
             [[-80, 0], [80, 1080], "Block.png", false],
             [[1920, 0], [80, 1080], "Block.png", false],
 
-            [[700, 0], [500,854], "Block.png", false]
+            [[700, 0], [500,954], "Block.png", false]
         ],
         "scales":[
             [[900, 900]],
