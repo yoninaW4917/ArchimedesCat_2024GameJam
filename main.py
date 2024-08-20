@@ -11,7 +11,6 @@ from levelEditor.levelEditor import LevelGenerator
 import fileLoader
 import utils
 from utils import Button
-import time
 
 
 pygame.mixer.init()
@@ -52,7 +51,8 @@ def loadCutscenes(scene_no: str):
     pygame.draw.rect(mainSurface, (0, 0, 0), (0, 0, 1920, 1080))
     mainSurface.blit(fileLoader.loadImage(f'Cutscenes/{scene_no}.png').convert(), (210, 40))
     pygame.display.flip()
-    time.sleep(5)
+    pygame.time.wait(5000)
+    cat.timer = pygame.time.get_ticks()
 
 def loadNewLevel(level : str) -> pygame.Surface:
     global blocks, fishes, scales, addon, addonRect
@@ -129,8 +129,6 @@ while running:
                 gameState = "end"
                 level = 1
             background = loadNewLevel(str(level))
-    elif gameState == "menu":
-        pass
 
     if gameState == "game":
         # ------- DRAWING ------- #
