@@ -559,7 +559,7 @@ class Player():
             surfaceIn.blit(CAT_PAW_IMAGE, pawPos)
 
             #Counting the scales and fish
-        self.bg_rect = pygame.image.load("./assets/images/UI/bg_gradient.png")
+        self.bg_rect = pygame.image.load("./assets/images/UI/bg_gradient_fog.png")
         self.bg_rect = pygame.Surface.convert_alpha(self.bg_rect)
         surfaceIn.blit(self.bg_rect, (0, 0))
         scale_count_text = self.font.render(f'Scales: {self.scale_count}', True, (255, 255, 255))
