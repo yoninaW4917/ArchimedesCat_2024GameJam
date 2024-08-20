@@ -89,7 +89,7 @@
         ],
         "scales":[],
         "fish":[],
-        "starting_pos":[200,400],
+        "starting_pos":[120,600],
         "level_background":"bg/Background5.png"
     },
     "6": {
