@@ -11,7 +11,7 @@ import fileLoader
 import utils
 from utils import Button
 
-
+pygame.mixer.init()
 pygame.display.init()
 pygame.font.init()
 
@@ -33,6 +33,11 @@ buttons : dict[str, Button] = {
     "RESUME" : Button((820, 500), (250, 100), fileLoader.loadImage("UI/RESUME BUTTON.png"))
 }
 
+music : dict[str, pygame.mixer.Sound] = {
+    "HAPPY" : fileLoader.loadSound("music/Happy cat.mp3"),
+    "SAD" : fileLoader.loadSound("music/Sad cat.mp3")
+}
+
 gameState = "menu"
 
 running = True
@@ -47,6 +52,17 @@ def loadNewLevel(level : str) -> pygame.Surface:
     cat.pos = level_gen.get(str(level), "starting_pos").copy()
     cat.startingPos = cat.pos.copy()
     cat.catSize = 100
+
+    if int(level) == 1:
+        # Happy
+        pygame.mixer.stop()
+
+        music["HAPPY"].play(-1)
+    elif int(level) == 5:
+        # Sad
+        pygame.mixer.stop()
+
+        music["SAD"].play(-1)
 
     if level in ("6", "7"):
         addon = fileLoader.loadImage(level_gen.get(str(level), "addon")).convert_alpha()
@@ -140,4 +156,3 @@ while running:
 
     pygame.display.flip()
     clock.tick(60)
-    print(cat.pos)

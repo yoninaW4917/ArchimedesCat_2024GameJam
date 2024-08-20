@@ -59,6 +59,7 @@ def loadSound(localSoundPath : str) -> pygame.mixer.Sound:
         return pygame.mixer.Sound(f"assets/sounds/{localSoundPath}")
     except FileNotFoundError:
         # Empty sound file
+        print(True)
         return pygame.mixer.Sound(np.zeros((1, 1), dtype=np.int16))
     
 if __name__ == '__main__':
