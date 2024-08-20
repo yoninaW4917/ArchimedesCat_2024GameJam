@@ -59,6 +59,8 @@ def loadNewLevel(level : str) -> pygame.Surface:
     return fileLoader.loadImage(level_gen.get(str(level), "level_background")).convert()
 
 background = loadNewLevel(level)
+menu_background = fileLoader.loadImage("./UI/MENU_BG.png")
+resume_background = fileLoader.loadImage("./UI/bg_gradient.png")
 scales_in_level = cat.get_scale_count_level()
 while running:
     # ------- EVENTS ------- #
@@ -76,7 +78,7 @@ while running:
                     break
                 
                 gameState = "pause"
-
+                mainSurface.blit(resume_background, (0, 0))
                 buttons["RESUME"].draw(mainSurface)
 
         elif ev.type == pygame.MOUSEBUTTONDOWN:
@@ -132,7 +134,7 @@ while running:
             mainSurface.blit(addon, addonRect)
 
     elif gameState == "menu":
-        mainSurface.blit(background, (0, 0))
+        mainSurface.blit(menu_background, (0, 0))
 
         buttons["START"].draw(mainSurface)
 
